@@ -1,7 +1,7 @@
 # Sleeping-Pattern
 
 ## How is this project configured
-It's basically a directory with sub-projects.
+It's basically a directory with sub-projects.  
 Each directory, containing r files, is a project. As each directory also contains a `.Rproj` file.
 
 ## How to initialize this project
