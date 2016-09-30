@@ -2,18 +2,18 @@ install.packages("twitteR")
 install.packages("tm")
 install.packages("wordcloud")
 install.packages("RColorBrewer")
+install.packages("rjson")
+
+# Set config from config.json
+library("rjson")
+config <- fromJSON(file="../config.json");
 
 library(twitteR)
 library(tm)
 library(wordcloud)
 library(RColorBrewer)
 
-api_key <- "TplDnL2Z1Fid7gCsHolTomxQT"
-api_secret <- "IgPFawGXN13LJ2iQj1rSKYekMwaOkT8tvV5H3wQ6ANDADDc0XI"
-access_token <- "237631092-NMov8Bzx069RmnQdypCU5K0mBSz0diCIoOAzRywE"
-access_token_secret <-
-  "NWGeKvundNCbb2i2iaxTm2BzaZUNxAtL7UDl50Qyac1Wx"
-setup_twitter_oauth(api_key, api_secret, access_token, access_token_secret)
+setup_twitter_oauth(config$twitter$api_key, config$twitter$api_secret, config$twitter$access_token, config$twitter$access_token_secret)
 
 ecoli = searchTwitter(
   "\"trusten\"",
