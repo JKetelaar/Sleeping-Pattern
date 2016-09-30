@@ -17,3 +17,6 @@ Create a config.json with the following content:
 }
 ```
 Whereas you fill the objects with the correct details from the [Twitter API](https://apps.twitter.com/).
+
+Each project member already has a config.json in their Dropbox, this should be placed in the root folder of this project.  
+This won't be pushed to this git, as it's in the `.gitignore` file.
