@@ -7,7 +7,7 @@ library(lubridate)
 library(plyr)
 
 sleep <-
-  read.csv(file = "../data/sleep-cycle/sleepdata.csv", header = T, sep = ";")
+  read.csv(file = "../data/sleep-cycle/sleepdata-thom.csv", header = T, sep = ";")
 
 #split end time
 sleep$End <- as.character(sleep$End)
