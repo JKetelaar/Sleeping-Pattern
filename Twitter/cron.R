@@ -2,7 +2,7 @@ source('../common/common.R')
 loadPackages(c('rjson'))
 
 config <- fromJSON(file = '../config.json')
-settings <- fromJSON(file = './twitterconf.json')
+settings <- fromJSON(file = '../settings.json')
 
 setup_twitter_oauth(
   config$twitter$api_key,
