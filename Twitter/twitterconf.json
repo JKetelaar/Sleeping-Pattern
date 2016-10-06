@@ -1,0 +1,86 @@
+{
+	"results": 200,
+	"countries": [
+		{
+			"name": "the Netherlands",
+			"language": "nl",
+			"regions": [
+				{
+					"name": "Drenthe",
+					"longitude": 52.91667,
+					"latitude": 6.58333,
+					"radius": 35
+				},
+				{
+					"name": "Flevoland",
+					"longitude": 52.53333,
+					"latitude": 5.66667,
+					"radius": 30
+				},
+				{
+					"name": "Friesland",
+					"longitude": 53.13333,
+					"latitude": 5.81667,
+					"radius": 35
+				},
+				{
+					"name": "Gelderland",
+					"longitude": 52.06,
+					"latitude": 5.95,
+					"radius": 50
+				},
+				{
+					"name": "Groningen",
+					"longitude": 53.25,
+					"latitude": 6.73333,
+					"radius": 35
+				},
+				{
+					"name": "Limburg",
+					"longitude": 51.21667,
+					"latitude": 5.93333,
+					"radius": 50
+				},
+				{
+					"name": "Noord-Brabant",
+					"longitude": 51.50345,
+					"latitude": 5,
+					"radius": 50
+				},
+				{
+					"name": "Noord-Holland",
+					"longitude": 52.66667,
+					"latitude": 4.83333,
+					"radius": 45
+				},
+				{
+					"name": "Overijssel",
+					"longitude": 52.4,
+					"latitude": 6.3,
+					"radius": 35
+				},
+				{
+					"name": "Utrecht",
+					"longitude": 52.10333,
+					"latitude": 5.17917,
+					"radius": 30
+				},
+				{
+					"name": "Zeeland",
+					"longitude": 51.5,
+					"latitude": 3.75,
+					"radius": 35
+				},
+				{
+					"name": "Zuid-Holland",
+					"longitude": 52,
+					"latitude": 4.66667,
+					"radius": 40
+				}
+			],
+			"terms": [
+				"slapen", "goodnight", "trusten", "slaap lekker", "net wakker", "goeie morgen", "goede morgen"
+			]
+		}
+	]
+}
