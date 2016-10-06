@@ -1,7 +1,7 @@
 source('../common/common.R')
 loadPackages(c('weatherData', 'rjson'))
 
-settings <- fromJSON(file = './settings.json')
+settings <- fromJSON(file = '../settings.json')
 
 toDataFrame <- function(result, station) {
   do.call(rbind,
