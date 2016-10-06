@@ -1,0 +1,58 @@
+{
+	"countries": [
+		{
+			"name": "the Netherlands",
+			"language": "nl",
+			"regions": [
+				{
+					"name": "Drenthe",
+					"station": "IDRENTHE89"
+				},
+				{
+					"name": "Flevoland",
+					"station": "ILELYSTA33"
+				},
+				{
+					"name": "Friesland",
+					"station": "IFRIESLA8"
+				},
+				{
+					"name": "Gelderland",
+					"station": "IARNHEM27"
+				},
+				{
+					"name": "Groningen",
+					"station": "IGRONING110"
+				},
+				{
+					"name": "Limburg",
+					"station": "ILIMBURG46"
+				},
+				{
+					"name": "Noord-Brabant",
+					"station": "INOORDBR196"
+				},
+				{
+					"name": "Noord-Holland",
+					"station": "IHAARLEM1"
+				},
+				{
+					"name": "Overijssel",
+					"station": "IHEINO2"
+				},
+				{
+					"name": "Utrecht",
+					"station": "IUTRECHT425"
+				},
+				{
+					"name": "Zeeland",
+					"station": "IOOSTSOU3"
+				},
+				{
+					"name": "Zuid-Holland",
+					"station": "IROTTERD204"
+				}
+			]
+		}
+	]
+}

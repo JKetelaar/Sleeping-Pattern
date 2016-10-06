@@ -1,22 +1,41 @@
-install.packages("devtools")
+source('../common/common.R')
+loadPackages(c('weatherData', 'rjson'))
 
-library("devtools")
-install_github("Ram-N/weatherData")
+settings <- fromJSON(file = './settings.json')
 
-x <-
-  getWeatherForDate(
-    "IZUIDHOL301",
-    "2016-10-06",
-    opt_detailed = TRUE,
-    opt_all_columns = TRUE,
-    station_type = "ID"
-  )
+toDataFrame <- function(result, station) {
+  do.call(rbind,
+          lapply(result,
+                 function(x) {
+                   c(
+                     date = x$Time,
+                     source = station,
+                     wind = x$WindSpeedKMH,
+                     temp = x$TemperatureC,
+                     min_temp = min(x$TemperatureC),
+                     max_temp = max(x$TemperatureC),
+                     air_pressure = x$PressurehPa,
+                     rain = x$dailyrainMM
+                   )
+                 }))
+}
 
-date <- x$Time
-source <- "IZUIDHOL301"
-wind <- x$WindSpeedKMH
-temp <- x$TemperatureC
-min_temp <- min(x$TemperatureC)
-max_temp <- max(x$TemperatureC)
-air_pressure <- x$PressurehPa
-rain <- x$dailyrainMM
+getData <- function(station) {
+  result <-
+    getWeatherForDate(
+      station,
+      Sys.Date(),
+      opt_detailed = TRUE,
+      opt_all_columns = TRUE,
+      station_type = "ID"
+    )
+  toDataFrame(result, station)
+}
+
+data <- NULL
+
+for (country in settings$countries) {
+  for (region in country$regions) {
+    data <- rbind(data, getData(region$station))
+  }
+}
