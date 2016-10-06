@@ -24,7 +24,7 @@ getData <- function(station) {
   result <-
     getWeatherForDate(
       station,
-      Sys.Date(),
+      Sys.Date() - 1,
       opt_detailed = TRUE,
       opt_all_columns = TRUE,
       station_type = "ID"
