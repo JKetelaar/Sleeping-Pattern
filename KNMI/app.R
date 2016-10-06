@@ -3,7 +3,14 @@ install.packages("devtools")
 library("devtools")
 install_github("Ram-N/weatherData")
 
-x <- getWeatherForDate("IZUIDHOL301", "2016-10-06", opt_detailed=TRUE, opt_all_columns=TRUE, station_type="ID")
+x <-
+  getWeatherForDate(
+    "IZUIDHOL301",
+    "2016-10-06",
+    opt_detailed = TRUE,
+    opt_all_columns = TRUE,
+    station_type = "ID"
+  )
 
 date <- x$Time
 source <- "IZUIDHOL301"
