@@ -18,6 +18,6 @@ toDataFrame <- function(data, sep) {
   }
 }
 
-sleep <-
-  read.csv(file = "../data/sleep-cycle/sleepdata-thom.csv", header = TRUE, sep = ",")
-result <- toDataFrame(sleep)
+#sleep <-
+  #read.csv(file = "../data/sleep-cycle/sleepdata-thom.csv", header = TRUE, sep = ",")
+#result <- toDataFrame(sleep)
