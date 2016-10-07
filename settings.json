@@ -110,9 +110,7 @@
             "weer",
             "ochtend"
          ],
-         "geoCountryCodes":[  
-            "NL"
-         ],
+         "geoCountryCode": "NL",
          "specialTerm":"facebook"
       }
    ]

@@ -24,10 +24,8 @@ trend_df <- NULL
 # The Google trends query. We loop through our splitted terms.
 for (country in settings$countries) {
   for (term in splitted_terms) {
-    for (country_code in settings$countries[[countries]]$geoCountryCodes) {
-      trend <- gtrends(c(term, special_term), geo = country_code, res = "7d")
-      trend_df = rbind(trend_df, as.data.frame(trend[['trend']]))
-    }
+    trend <- gtrends(c(term, special_term), geo = settings$countries[[length]]$geoCountryCode, res = "7d")
+    trend_df = rbind(trend_df, as.data.frame(trend[['trend']]))
   }
 }
 
