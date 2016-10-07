@@ -1,104 +1,120 @@
-{
-	"results": 200,
-	"countries": [
-		{
-			"name": "the Netherlands",
-			"language": "nl",
-			"regions": [
-				{
-					"name": "Drenthe",
-					"longitude": 52.91667,
-					"latitude": 6.58333,
-					"radius": 35,
-					"station": "IDRENTHE89"
-				},
-				{
-					"name": "Flevoland",
-					"longitude": 52.53333,
-					"latitude": 5.66667,
-					"radius": 30,
-					"station": "ILELYSTA33"
-				},
-				{
-					"name": "Friesland",
-					"longitude": 53.13333,
-					"latitude": 5.81667,
-					"radius": 35,
-					"station": "IFRIESLA8"
-				},
-				{
-					"name": "Gelderland",
-					"longitude": 52.06,
-					"latitude": 5.95,
-					"radius": 50,
-					"station": "IARNHEM27"
-				},
-				{
-					"name": "Groningen",
-					"longitude": 53.25,
-					"latitude": 6.73333,
-					"radius": 35,
-					"station": "IGRONING110"
-				},
-				{
-					"name": "Limburg",
-					"longitude": 51.21667,
-					"latitude": 5.93333,
-					"radius": 50,
-					"station": "ILIMBURG46"
-				},
-				{
-					"name": "Noord-Brabant",
-					"longitude": 51.50345,
-					"latitude": 5,
-					"radius": 50,
-					"station": "INOORDBR196"
-				},
-				{
-					"name": "Noord-Holland",
-					"longitude": 52.66667,
-					"latitude": 4.83333,
-					"radius": 45,
-					"station": "IHAARLEM1"
-				},
-				{
-					"name": "Overijssel",
-					"longitude": 52.4,
-					"latitude": 6.3,
-					"radius": 35,
-					"station": "IHEINO2"
-				},
-				{
-					"name": "Utrecht",
-					"longitude": 52.10333,
-					"latitude": 5.17917,
-					"radius": 30,
-					"station": "IUTRECHT425"
-				},
-				{
-					"name": "Zeeland",
-					"longitude": 51.5,
-					"latitude": 3.75,
-					"radius": 35,
-					"station": "IOOSTSOU3"
-				},
-				{
-					"name": "Zuid-Holland",
-					"longitude": 52,
-					"latitude": 4.66667,
-					"radius": 40,
-					"station": "IROTTERD204"
-				}
-			],
-			"twitterTerms": [
-				"slapen", "goodnight", "trusten", "slaap lekker", "net wakker", "goeie morgen", "goede morgen"
-			],
-			"gtrendsTerms": [
-				"wekker", "bed tijd", "bed tijd", "kopen", "koffie", "file", "radio", "facebook", "weer", "ochtend"
-			]
-		}
-	],
-	"sleepcycleTags": [
+{  
+   "results":200,
+   "countries":[  
+      {  
+         "name":"the Netherlands",
+         "language":"nl",
+         "regions":[  
+            {  
+               "name":"Drenthe",
+               "longitude":52.91667,
+               "latitude":6.58333,
+               "radius":35,
+               "station":"IDRENTHE89"
+            },
+            {  
+               "name":"Flevoland",
+               "longitude":52.53333,
+               "latitude":5.66667,
+               "radius":30,
+               "station":"ILELYSTA33"
+            },
+            {  
+               "name":"Friesland",
+               "longitude":53.13333,
+               "latitude":5.81667,
+               "radius":35,
+               "station":"IFRIESLA8"
+            },
+            {  
+               "name":"Gelderland",
+               "longitude":52.06,
+               "latitude":5.95,
+               "radius":50,
+               "station":"IARNHEM27"
+            },
+            {  
+               "name":"Groningen",
+               "longitude":53.25,
+               "latitude":6.73333,
+               "radius":35,
+               "station":"IGRONING110"
+            },
+            {  
+               "name":"Limburg",
+               "longitude":51.21667,
+               "latitude":5.93333,
+               "radius":50,
+               "station":"ILIMBURG46"
+            },
+            {  
+               "name":"Noord-Brabant",
+               "longitude":51.50345,
+               "latitude":5,
+               "radius":50,
+               "station":"INOORDBR196"
+            },
+            {  
+               "name":"Noord-Holland",
+               "longitude":52.66667,
+               "latitude":4.83333,
+               "radius":45,
+               "station":"IHAARLEM1"
+            },
+            {  
+               "name":"Overijssel",
+               "longitude":52.4,
+               "latitude":6.3,
+               "radius":35,
+               "station":"IHEINO2"
+            },
+            {  
+               "name":"Utrecht",
+               "longitude":52.10333,
+               "latitude":5.17917,
+               "radius":30,
+               "station":"IUTRECHT425"
+            },
+            {  
+               "name":"Zeeland",
+               "longitude":51.5,
+               "latitude":3.75,
+               "radius":35,
+               "station":"IOOSTSOU3"
+            },
+            {  
+               "name":"Zuid-Holland",
+               "longitude":52,
+               "latitude":4.66667,
+               "radius":40,
+               "station":"IROTTERD204"
+            }
+         ],
+         "twitterTerms":[  
+            "slapen",
+            "goodnight",
+            "trusten",
+            "slaap lekker",
+            "net wakker",
+            "goeie morgen",
+            "goede morgen"
+         ],
+         "gtrendsTerms":[  
+            "wekker",
+            "bed tijd",
+            "bedtijd",
+            "kopen",
+            "koffie",
+            "file",
+            "radio",
+            "weer",
+            "ochtend"
+         ],
+         "geoCountryCode": "NL",
+         "specialTerm":"facebook"
+      }
+   ],
+   "sleepcycleTags": [
 		"start", "end", "sleep.quality", "time.in.bed", "wake.up", "sleep.notes", "heart.rate", "activity..steps."
 	]
 }
