@@ -29,7 +29,7 @@ toDataFrame <- function(result, longitude, latitude) {
                      date = x$getCreated(),
                      longitude = long,
                      latitude = lat,
-                     retweet = x$getIsRetweet(),
+                     retweet = as.integer(x$getIsRetweet()),
                      name = x$getScreenName(),
                      tweet = x$getText()
                    )
