@@ -90,9 +90,13 @@
 					"station": "IROTTERD204"
 				}
 			],
-			"terms": [
+			"twitter_terms": [
 				"slapen", "goodnight", "trusten", "slaap lekker", "net wakker", "goeie morgen", "goede morgen"
-			]
+			],
+"gtrends_terms": ["wekker", "bed tijd", "bed tijd", "kopen", "koffie", "file", "radio", "facebook", "weer", "ochtend"
+]
+
+
 		}
 	]
 }
