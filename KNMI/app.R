@@ -4,20 +4,15 @@ loadPackages(c('weatherData', 'rjson'))
 settings <- fromJSON(file = '../settings.json')
 
 toDataFrame <- function(result, station) {
-  do.call(rbind,
-          lapply(result,
-                 function(x) {
-                   c(
-                     date = x$Time,
-                     source = station,
-                     wind = x$WindSpeedKMH,
-                     temp = x$TemperatureC,
-                     min_temp = min(x$TemperatureC),
-                     max_temp = max(x$TemperatureC),
-                     air_pressure = x$PressurehPa,
-                     rain = x$dailyrainMM
-                   )
-                 }))
+  out <- data.frame(
+    date = result$Time.1,
+    wind = result$WindSpeedKMH,
+    temp = result$TemperatureC,
+    air_pressure = result$PressurehPa,
+    rain = result$dailyrainMM
+  )
+  out$source = station
+  return(out)
 }
 
 getData <- function(station) {
@@ -39,3 +34,5 @@ for (country in settings$countries) {
     data <- rbind(data, getData(region$station))
   }
 }
+
+data <- data[data$date != '<br>',]
