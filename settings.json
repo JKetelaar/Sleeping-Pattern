@@ -97,5 +97,8 @@
 				"wekker", "bed tijd", "bed tijd", "kopen", "koffie", "file", "radio", "facebook", "weer", "ochtend"
 			]
 		}
+	],
+	"sleepcycleTags": [
+		"start", "end", "sleep.quality", "time.in.bed", "wake.up", "sleep.notes", "heart.rate", "activity..steps."
 	]
 }
