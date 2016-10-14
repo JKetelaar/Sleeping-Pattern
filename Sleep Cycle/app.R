@@ -36,9 +36,21 @@ toDataFrame <- function(data, username) {
       }
     }
     
-    data$username <- username;
+    data$username <- username
     
-    colnames(data) <- c('start', 'end', 'quality', 'in_bed', 'wake_up', 'note', 'heart', 'activity', 'username')
+    
+    colnames(data) <-
+      c(
+        'start',
+        'end',
+        'quality',
+        'in_bed',
+        'wake_up',
+        'note',
+        'heart',
+        'activity',
+        'username'
+      )
     
     return(data)
   } else{
@@ -46,8 +58,12 @@ toDataFrame <- function(data, username) {
   }
 }
 
-insertIntoDatabase <- function(data){
-  dbWriteTable(conn, 'sleep_cycle', data, append = T, row.names = F)
+insertIntoDatabase <- function(data) {
+  dbWriteTable(conn,
+               'sleep_cycle',
+               data,
+               append = T,
+               row.names = F)
 }
 
 removeDatabaseDuplicates <- function(data, username) {
