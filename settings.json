@@ -113,5 +113,8 @@
          "geoCountryCode": "NL",
          "specialTerm":"kopen"
       }
-   ]
+   ],
+   "sleepcycleTags": [
+		"start", "end", "sleep.quality", "time.in.bed", "wake.up", "sleep.notes", "heart.rate", "activity..steps."
+	]
 }
