@@ -1,15 +1,15 @@
 # Install.
 devtools::install_github("PMassicotte/gtrendsR")
 source('../common/common.R')
-loadPackages(c('rjson', 'RMySQL'))
+loadPackages(c('rjson', 'RMySQL', 'gtrendsR'))
 
 # Setup.
 settings <- fromJSON(file='../settings.json')
 config <- fromJSON(file = '../config.json')
 
 # Connect to Google.
-ch <- gconnect(config$email, config$ww)
-countries <- as.numeric(length(config$countries))
+ch <- gconnect(config$gtrends$email, config$gtrends$ww)
+countries <- as.numeric(length(settings$countries))
 
 gtrends_terms <- settings$countries[[countries]]$gtrendsTerms
 
@@ -19,28 +19,31 @@ splitted_terms <- split(gtrends_terms, ceiling(seq_along(gtrends_terms) / 4))
 # Add specialTerm to every query so we get relatively results to compare.
 special_term <- settings$countries[[countries]]$specialTerm
 
-trend_df <- NULL
+
+final_trend_df <- NULL
 
 # The Google trends query. We loop through our splitted terms.
 for (country in settings$countries) {
+  special_term_query <- gtrends(special_term, geo = settings$countries[[countries]]$geoCountryCode, res = "7d")
+  special_term_df <- as.data.frame(special_term_query[['trend']])
+  final_trend_df <- rbind(special_term_df, final_trend_df)
+  
   for (term in splitted_terms) {
-    trend <- gtrends(c(term, special_term), geo = settings$countries[[length]]$geoCountryCode, res = "7d")
-    trend_df = rbind(trend_df, as.data.frame(trend[['trend']]))
+    trend <- gtrends(c(term, special_term), geo = settings$countries[[countries]]$geoCountryCode, res = "7d")
+    trend_df <- as.data.frame(trend[['trend']])
+    
+    # Multiplier for special term.
+    mult <- mean(special_term_df$hits / trend_df[trend_df$keyword == special_term,]$hits)
+    trend_df$hits <- trend_df$hits * mult
+    
+    # Combine data frame to finaal trend data frame.
+    final_trend_df <- rbind(trend_df[trend_df$keyword != special_term,], final_trend_df)
   }
 }
 
-# TODO
-
-# In plaats van alles samen te voegen in 1 data.frame. Een vector van data.frames maken.
-# Elke data.frame is 1 query.
-# Vervolgens voor elk data.frame de facebook gegevens vergelijken met de andere data.frames
-# Daarna die gegevens normaliseren en alles weer terug in 1 data.frame zetten.  
-
-
-
 # Save in database.
 
-colnames(trend_df) <- c("time", "keyword", "percentage", "location")
+colnames(final_trend_df) <- c("time", "keyword", "percentage", "location")
 
 conn <- dbConnect(RMySQL::MySQL(),
                   host = config$mysql$host,
@@ -48,8 +51,6 @@ conn <- dbConnect(RMySQL::MySQL(),
                   user = config$mysql$user,
                   password = config$mysql$password)
 
-dbWriteTable(conn, 'google_trends', trend_df, append = T, row.names = F)
+dbWriteTable(conn, 'google_trends', final_trend_df, append = T, row.names = F)
 
 dbDisconnect(conn)
-
-
