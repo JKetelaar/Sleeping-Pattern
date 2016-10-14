@@ -46,8 +46,9 @@ server <- function(input, output) {
     output$contents <- renderTable({
       inFile <- input$file1
       
-      if (is.null(inFile))
+      if (is.null(inFile)) {
         return(NULL)
+      }
       
       sleepy <-
         read.csv(inFile$datapath,
@@ -55,7 +56,7 @@ server <- function(input, output) {
       
       source("./app.R")
       frame <- toDataFrame(sleepy)
-      removeDatabaseDuplicates(frame, input$username)
+      return(frame)
     })
   })
 }
