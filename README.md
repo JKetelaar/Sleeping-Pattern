@@ -13,7 +13,17 @@ Create a config.json with the following content:
 		"api_secret": "your_api_secret",
 		"access_token": "your_access_token",
 		"access_token_secret": "your_secret_access_token"
-	}
+	},
+	"mysql":{  
+      "host":"localhost",
+      "user":"root",
+      "password":"root",
+      "database":"sleeping_pattern"
+   },
+   "gtrends":{  
+      "email":"username@gmail.com",
+      "ww":"password"
+   }
 }
 ```
 Whereas you fill the objects with the correct details from the [Twitter API](https://apps.twitter.com/).
