@@ -17,7 +17,7 @@ stringToMinutes <- function(x) {
   x[1] * 60 + x[2]
 }
 
-toDataFrame <- function(data, sep) {
+toDataFrame <- function(data, username) {
   if (nrow(data) > 1) {
     names(data) <- tolower(names(data))
     
@@ -35,10 +35,19 @@ toDataFrame <- function(data, sep) {
         data[[tag]] <- as.integer(gsub("%", "", as.character(data[[tag]])))
       }
     }
+    
+    data$username <- username;
+    
+    colnames(data) <- c('start', 'end', 'quality', 'in_bed', 'wake_up', 'note', 'heart', 'activity', 'username')
+    
     return(data)
   } else{
     warning("Doesn't seem like a proper CSV, or does it?")
   }
+}
+
+insertIntoDatabase <- function(data){
+  dbWriteTable(conn, 'sleep_cycle', data, append = T, row.names = F)
 }
 
 removeDatabaseDuplicates <- function(data, username) {
@@ -56,7 +65,8 @@ removeDatabaseDuplicates <- function(data, username) {
 
 # Examples
 # sleep <-read.csv(file = "../data/sleep-cycle/sleepdata-kwdoyle.csv", header = TRUE, sep = ",")
-# result <- toDataFrame(sleep)
+# result <- toDataFrame(sleep, 'asd')
+# insertIntoDatabase(result)
 
 # Read folder
 # filenames <- list.files(path = "/Users/thomsuykerbuyk/github/sleepdata_test")
