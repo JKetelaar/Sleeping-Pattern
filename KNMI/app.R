@@ -1,5 +1,7 @@
 source('../common/common.R')
-loadPackages(c('weatherData', 'rjson', 'RMySQL'))
+loadPackages(c('rjson', 'RMySQL'))
+library("devtools")
+install_github("ozagordi/weatherData")
 
 settings <- fromJSON(file = '../settings.json')
 config <- fromJSON(file = '../config.json')
