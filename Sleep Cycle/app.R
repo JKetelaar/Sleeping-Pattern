@@ -82,6 +82,7 @@ removeDatabaseDuplicates <- function(data, username) {
 # Examples
 # sleep <-read.csv(file = "../data/sleep-cycle/sleepdata-kwdoyle.csv", header = TRUE, sep = ",")
 # result <- toDataFrame(sleep, 'asd')
+# removeDatabaseDuplicates(result, 'asd')
 # insertIntoDatabase(result)
 
 # Read folder

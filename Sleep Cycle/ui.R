@@ -56,6 +56,7 @@ server <- function(input, output) {
       
       source("./app.R")
       frame <- toDataFrame(sleepy, input$username)
+      
       insertIntoDatabase(frame)
       return(frame)
     })
