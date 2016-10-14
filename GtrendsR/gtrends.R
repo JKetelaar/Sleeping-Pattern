@@ -1,6 +1,6 @@
 # Install.
 source('../common/common.R')
-loadPackages(c('rjson', 'RMySQL', 'devtools'))
+loadPackages(c('rjson', 'RMySQL', 'devtools', 'XML'))
 devtools::install_github("PMassicotte/gtrendsR")
 library(gtrendsR)
 
