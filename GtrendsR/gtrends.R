@@ -1,7 +1,7 @@
 # Install.
-devtools::install_github("PMassicotte/gtrendsR")
 source('../common/common.R')
-loadPackages(c('rjson', 'RMySQL', 'gtrendsR'))
+loadPackages(c('rjson', 'RMySQL', 'devtools'))
+devtools::install_github("PMassicotte/gtrendsR")
 
 # Setup.
 settings <- fromJSON(file='../settings.json')
