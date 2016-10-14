@@ -1,7 +1,16 @@
 source('../common/common.R')
-loadPackages(c('weatherData', 'rjson'))
+loadPackages(c('weatherData', 'rjson', 'RMySQL'))
 
 settings <- fromJSON(file = '../settings.json')
+config <- fromJSON(file = '../config.json')
+
+conn <- dbConnect(
+  RMySQL::MySQL(),
+  host = config$mysql$host,
+  dbname = config$mysql$database,
+  user = config$mysql$user,
+  password = config$mysql$password
+)
 
 toDataFrame <- function(result, station) {
   out <- data.frame(
@@ -27,6 +36,14 @@ getData <- function(station) {
   toDataFrame(result, station)
 }
 
+insertIntoDatabase <- function(data) {
+  dbWriteTable(conn,
+               'knmi',
+               data,
+               append = T,
+               row.names = F)
+}
+
 data <- NULL
 
 for (country in settings$countries) {
@@ -35,4 +52,13 @@ for (country in settings$countries) {
   }
 }
 
-data <- data[data$date != '<br>',]
+data <- data[data$date != '<br>', ]
+
+colnames(data) <-
+  c('date',
+    'wind',
+    'temperature',
+    'air_pressure',
+    'rain',
+    'source')
+insertIntoDatabase(data)
