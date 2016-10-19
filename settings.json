@@ -7,85 +7,85 @@
          "regions":[  
             {  
                "name":"Drenthe",
-               "longitude":52.91667,
-               "latitude":6.58333,
+               "latitude":52.91667,
+               "longitude":6.58333,
                "radius":35,
                "station":"IDRENTHE89"
             },
             {  
                "name":"Flevoland",
-               "longitude":52.53333,
-               "latitude":5.66667,
+               "latitude":52.53333,
+               "longitude":5.66667,
                "radius":30,
                "station":"ILELYSTA33"
             },
             {  
                "name":"Friesland",
-               "longitude":53.13333,
-               "latitude":5.81667,
+               "latitude":53.13333,
+               "longitude":5.81667,
                "radius":35,
                "station":"IFRIESLA8"
             },
             {  
                "name":"Gelderland",
-               "longitude":52.06,
-               "latitude":5.95,
+               "latitude":52.06,
+               "longitude":5.95,
                "radius":50,
                "station":"IARNHEM27"
             },
             {  
                "name":"Groningen",
-               "longitude":53.25,
-               "latitude":6.73333,
+               "latitude":53.25,
+               "longitude":6.73333,
                "radius":35,
                "station":"IGRONING110"
             },
             {  
                "name":"Limburg",
-               "longitude":51.21667,
-               "latitude":5.93333,
+               "latitude":51.21667,
+               "longitude":5.93333,
                "radius":50,
                "station":"ILIMBURG46"
             },
             {  
                "name":"Noord-Brabant",
-               "longitude":51.50345,
-               "latitude":5,
+               "latitude":51.50345,
+               "longitude":5,
                "radius":50,
                "station":"INOORDBR196"
             },
             {  
                "name":"Noord-Holland",
-               "longitude":52.66667,
-               "latitude":4.83333,
+               "latitude":52.66667,
+               "longitude":4.83333,
                "radius":45,
                "station":"IHAARLEM1"
             },
             {  
                "name":"Overijssel",
-               "longitude":52.4,
-               "latitude":6.3,
+               "latitude":52.4,
+               "longitude":6.3,
                "radius":35,
                "station":"IHEINO2"
             },
             {  
                "name":"Utrecht",
-               "longitude":52.10333,
-               "latitude":5.17917,
+               "latitude":52.10333,
+               "longitude":5.17917,
                "radius":30,
                "station":"IUTRECHT425"
             },
             {  
                "name":"Zeeland",
-               "longitude":51.5,
-               "latitude":3.75,
+               "latitude":51.5,
+               "longitude":3.75,
                "radius":35,
                "station":"IOOSTSOU3"
             },
             {  
                "name":"Zuid-Holland",
-               "longitude":52,
-               "latitude":4.66667,
+               "latitude":52,
+               "longitude":4.66667,
                "radius":40,
                "station":"IROTTERD204"
             }
