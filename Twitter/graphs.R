@@ -14,5 +14,5 @@ dbDisconnect(conn)
 
 data$date <- as.POSIXct(data$date, origin = '1970-01-01')
 
-times = as.POSIXct(format(data$date, format = "%H:%M"), format = "%H:%M")
-hist(times, 'hours', format = '%H:%M')
+times = as.POSIXct(format(data$date, format = '%H:%M'), format = '%H:%M')
+hist(times, 'hours', format = '%H:%M', xlab = 'Hour', ylab = 'Tweet density')
