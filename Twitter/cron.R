@@ -63,7 +63,9 @@ for (country in settings$countries) {
 }
 #remove duplicates
 data <- as.data.frame(data)
+print(nrow(data))
 data <- data[duplicated(data$id), ]
+print(nrow(data))
 
 conn <- dbConnect(RMySQL::MySQL(),
           host = config$mysql$host,

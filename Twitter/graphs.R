@@ -16,3 +16,10 @@ data$date <- as.POSIXct(data$date, origin = '1970-01-01')
 
 times = as.POSIXct(format(data$date, format = '%H:%M'), format = '%H:%M')
 hist(times, 'hours', format = '%H:%M', xlab = 'Hour', ylab = 'Tweet density')
+
+
+timesPerDay = aggregate(as.POSIXct(format(data$date, format = '%H:%M'), format = '%H:%M'),
+          list(Day = format(data$date, format = '%a')), c)
+apply(timesPerDay, 1, function(row) {
+  hist(row$x, 'hours', format = '%H:%M', xlab = 'Hour', ylab = 'Tweet density', main = row$Day)
+})
