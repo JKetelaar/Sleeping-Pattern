@@ -58,8 +58,8 @@ for (country in settings$countries) {
   for (region in country$regions) {
     for (term in country$twitterTerms) {
       data <- rbind(data, getData(country, region, term))
-      Sys.sleep(2.5 * 60)
     }
+    Sys.sleep(2.5 * 60)
   }
 }
 #remove duplicates
