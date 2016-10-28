@@ -1,9 +1,8 @@
 source('../common/common.R')
-loadPackages(c('rjson', 'RMySQL', 'reshape', 'ggplot2', 'plyr'))
+loadPackages(c('rjson', 'RMySQL'))
 library("devtools")
 install_github("ozagordi/weatherData")
 library("weatherData")
-require(data.table)
 
 settings <- fromJSON(file = '../settings.json')
 config <- fromJSON(file = '../config.json')
@@ -66,36 +65,3 @@ colnames(data) <-
     'rain',
     'source')
 insertIntoDatabase(data)
-
-#source <- data$source
-#temp <- data$temp
-#date <- data$date
-
-apply.hourly <- function(x, FUN,...) {
-  ep <- endpoints(x, 'hours')
-  period.apply(x, ep, FUN, ...)
-}
-
-dat.xts <- xts(data$temp,
-               as.POSIXct(data$date))
-apply.hourly(dat.xts,sum)
-
-head(data$date)
-
-substr("2016-10-26 00:00:00", 0, 13)
-
-x <- ddply(
-  data, 
-  .(when=substr(date, 0, 13)), 
-  summarize, 
-  temp=mean(temperature)
-)
-
-data$hour <- as.POSIXlt(data$date)$hour
-ggplot(data, aes(hour, temperature, colour=source)) + 
-  geom_line() + 
-  geom_point() +
-  theme_bw()
-
-ggplot(df, aes(x=date, y=temp, colour=factor(source))) + 
-  geom_point(size=2, shape=19)
