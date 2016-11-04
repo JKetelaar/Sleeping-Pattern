@@ -43,8 +43,8 @@ getData <- function(country, region, term) {
                           since = as.character(Sys.Date() - 1),
                           until = as.character(Sys.Date()),
                           geocode = paste(
-                            region$longitude,
                             region$latitude,
+                            region$longitude,
                             paste(region$radius, 'km', sep = ''),
                             sep = ','
                           )
