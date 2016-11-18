@@ -1,6 +1,6 @@
 # Install.
 source('../common/common.R')
-loadPackages(c('rjson', 'RMySQL', 'devtools', 'XML'))
+loadPackages(c('rjson', 'RMySQL', 'devtools', 'XML', 'lazyeval', 'tibble', 'scales'))
 devtools::install_github("PMassicotte/gtrendsR")
 library(gtrendsR)
 
@@ -41,6 +41,7 @@ for (country in settings$countries) {
     final_trend_df <- rbind(trend_df[trend_df$keyword != special_term,], final_trend_df)
   }
 }
+
 
 # Save in database.
 
