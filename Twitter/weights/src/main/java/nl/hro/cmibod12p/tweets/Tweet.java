@@ -8,7 +8,7 @@ public class Tweet implements Comparable<Tweet> {
 
 	public Tweet(int time, String tweet) {
 		this.time = time;
-		this.tweet = tweet;
+		this.tweet = tweet.toLowerCase();
 	}
 
 	public int getTime() {
