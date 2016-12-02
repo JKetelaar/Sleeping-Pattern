@@ -47,16 +47,13 @@ getCountry <- function(tweet) {
 }
 
 getWeight <- function(tweet, country) {
-  if(!is.na(country)) {
-    weight <- 0
-    for(term in country$twitterTerms) {
-      if(grepl(term, tweet$tweet, ignore.case = T)) {
-        weight <- weight + country$twitterWeights[[term]]
-      }
+  weight <- 0
+  for(term in country$twitterTerms) {
+    if(grepl(term, tweet$tweet, ignore.case = T)) {
+      weight <- weight + country$twitterWeights[[term]]
     }
-    return(weight)
   }
-  NA
+  weight
 }
 
 analyzeData <- function(data) {
@@ -68,10 +65,16 @@ analyzeData <- function(data) {
   while (i <= rows) {
     tweet <- data[i,]
     loc <- getCountry(tweet)
-    country <- settings$countries[[loc[1]]]
-    countries <- c(countries, country$name)
-    regions <- c(regions, country$regions[[loc[2]]]$name)
-    weights <- c(weights, getWeight(tweet, country))
+    if(length(loc) < 2) {
+      countries <- c(countries, NA)
+      regions <- c(regions, NA)
+      weights <- c(weights, NA)
+    } else {
+      country <- settings$countries[[loc[1]]]
+      countries <- c(countries, country$name)
+      regions <- c(regions, country$regions[[loc[2]]]$name)
+      weights <- c(weights, getWeight(tweet, country))
+    }
     i <- i + 1
   }
   data$weight <- weights

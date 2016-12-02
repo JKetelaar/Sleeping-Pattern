@@ -18,7 +18,14 @@ shinyUI(fluidPage(
        selectInput(
          'country', choices = getCountries(), label = 'Countries', selected = 1
        ),
-       uiOutput('regionC')
+       uiOutput('regionC'),
+       radioButtons(
+         'method',
+         'Display',
+         c('Total' = 'sum',
+           'Mean' = 'mean'),
+         selected = 'sum'
+       )
     ),
     
     mainPanel(
