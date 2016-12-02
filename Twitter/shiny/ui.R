@@ -1,21 +1,28 @@
 library(shiny)
 
+getCountries <- function() {
+  countries <- list()
+  i <- 1
+  for(country in settings$countries) {
+    countries[[country$name]] <- i
+    i <- i + 1
+  }
+  countries
+}
+
 shinyUI(fluidPage(
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel('Tweet analysis'),
   
-  # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
+       selectInput(
+         'country', choices = getCountries(), label = 'Countries', selected = 1
+       ),
+       uiOutput('regionC')
     ),
     
-    # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot")
+       plotOutput('sleep')
     )
   )
 ))
