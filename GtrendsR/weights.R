@@ -16,7 +16,7 @@ conn <- dbConnect(RMySQL::MySQL(),
                   user = config$mysql$user,
                   password = config$mysql$password)
 
-keywords <- settings$countries[[1]]$gtrendsTerms
+keywords <- c(settings$countries[[1]]$gtrendsTerms, settings$countries[[1]]$specialTerm) 
 
 data <- dbGetQuery(conn, 'SELECT HOUR(`time`) AS `hour`, `keyword`, `percentage` FROM google_trends WHERE `location` = "NL"')
 
@@ -43,3 +43,9 @@ weights$Weight <- norm(weights$Hour) * -2 + 1
 weights$Hour <- NULL
 
 dbDisconnect(conn)
+
+# Calculate the weights for every keyword in the final dataset
+final_trend_df$weight <- 0
+for(keyword in unique(final_trend_df$keyword)) {
+  final_trend_df$weight <- final_trend_df$weight + (final_trend_df$keyword == keyword) * final_trend_df$percentage * settings$countries[[1]]$gtrendsWeights[[keyword]]
+}
