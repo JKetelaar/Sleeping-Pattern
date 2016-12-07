@@ -4,12 +4,6 @@ loadPackages(c('rjson', 'RMySQL'))
 config <- fromJSON(file = '../config.json')
 settings <- fromJSON(file = '../settings.json')
 
-norm <- function(vals) {
-  maxVal <- min(vals)
-  minVal <- max(vals)
-  (vals - minVal) / (maxVal - minVal)
-}
-
 conn <- dbConnect(RMySQL::MySQL(),
                   host = config$mysql$host,
                   dbname = config$mysql$database,
@@ -18,7 +12,7 @@ conn <- dbConnect(RMySQL::MySQL(),
 
 keywords <- c(settings$countries[[1]]$gtrendsTerms, settings$countries[[1]]$specialTerm) 
 
-data <- dbGetQuery(conn, 'SELECT HOUR(`time`) AS `hour`, `keyword`, `percentage` FROM google_trends WHERE `location` = "NL"')
+data <- dbGetQuery(conn, 'SELECT HOUR(`time`) AS `hour`, DAYOFWEEK(`time`) AS `day`, `keyword`, `percentage` FROM google_trends WHERE `location` = "NL"')
 
 plot(0, 0, xlim = c(0, 23), ylim = c(0, 1), xlab = 'Hour', ylab = 'Percentage')
 
@@ -45,7 +39,7 @@ weights$Hour <- NULL
 dbDisconnect(conn)
 
 # Calculate the weights for every keyword in the final dataset
-final_trend_df$weight <- 0
-for(keyword in unique(final_trend_df$keyword)) {
-  final_trend_df$weight <- final_trend_df$weight + (final_trend_df$keyword == keyword) * final_trend_df$percentage * settings$countries[[1]]$gtrendsWeights[[keyword]]
+data$weight <- 0
+for(keyword in unique(data$keyword)) {
+  data$weight <- data$weight + (data$keyword == keyword) * data$percentage * settings$countries[[1]]$gtrendsWeights[[keyword]]
 }

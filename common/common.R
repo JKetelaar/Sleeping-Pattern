@@ -7,3 +7,9 @@ loadPackages <- function(packages) {
 		library(x, character.only = T)
 	})
 }
+
+norm <- function(vals) {
+  maxVal <- max(vals)
+  minVal <- min(vals)
+  (vals - minVal) / (maxVal - minVal)
+}

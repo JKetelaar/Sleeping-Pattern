@@ -122,14 +122,14 @@
             "goede morgen":0.7694297837
          },
          "gtrendsWeights":{  
-            "wekker":0.4458408,
+            "wekker":-0.2130199,
             "bed tijd":0,
             "bedtijd":0,
-            "facebook":0.9571524,
-            "koffie": 0.3968143,
-            "file":0.6332479,
-            "radio":0.8031360,
-            "weer":0.7200873,
+            "facebook":0.7035816,
+            "koffie": -0.2055234,
+            "file":0.3610125,
+            "radio":0.8234904,
+            "weer":0.7393901,
             "ochtend":1.00000000,
 	    "kopen": -1.0000000
          }
