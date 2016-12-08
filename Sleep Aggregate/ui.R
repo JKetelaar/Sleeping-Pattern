@@ -44,7 +44,8 @@ shinyUI(fluidPage(
     ),
     
     mainPanel(
-      plotOutput('sleep')
+      plotOutput('sleep'),
+      plotOutput('totals')
     )
   )
 ))

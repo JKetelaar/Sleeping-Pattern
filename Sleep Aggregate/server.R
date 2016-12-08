@@ -41,4 +41,32 @@ shinyServer(function(input, output) {
     points(tData$Hour, tData$x, type = 'l', col = 'red')
     out
   })
+  output$totals <- renderPlot({
+    country <- settings$countries[[as.integer(input$country)]]
+    index <- as.integer(input$region)
+    if(is.null(input$region)) {
+      index <- 0
+    }
+    region <- NULL
+    if(index > 0 && index <= length(country$regions)) {
+      region <- country$regions[[index]]
+    }
+    gData <- gtrendsData[gtrendsData$location == country$geoCountryCode,]
+    tData <- twitterData[twitterData$country == country$name,]
+    if(!is.null(region)) {
+      tData <- tData[tData$region == region$name,]
+    }
+    if(input$days != 0) {
+      gData <- gData[gData$day == input$days,]
+      tData <- tData[tData$day == input$days,]
+    }
+    tData$one <- 1
+    gData <- aggregate(gData$percentage, list(Hour = gData$hour), sum)
+    tData <- aggregate(tData$one, list(Hour = tData$hour), sum)
+    gData$x <- norm(gData$x)
+    tData$x <- norm(tData$x)
+    out <- plot(gData$Hour, gData$x, type = 'h', ylab = 'Frequency', xlab = 'Hour')
+    points(tData$Hour, tData$x, type = 'l', col = 'red')
+    out
+  })
 })
