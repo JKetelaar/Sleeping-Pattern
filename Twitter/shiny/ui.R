@@ -16,7 +16,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
        selectInput(
-         'country', choices = getCountries(), label = 'Countries', selected = 1
+         'country', choices = getCountries(), label = 'Country', selected = 1
        ),
        uiOutput('regionC'),
        radioButtons(

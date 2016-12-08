@@ -10,7 +10,7 @@ readData <- function() {
                     dbname = config$mysql$database,
                     user = config$mysql$user,
                     password = config$mysql$password)
-  data <- dbReadTable(conn, 'tweets')
+  data <- dbGetQuery(conn, 'SELECT `date`, `latitude`, `longitude`, `tweet`, HOUR(FROM_UNIXTIME(`date`)) AS `hour`, DAYOFWEEK(FROM_UNIXTIME(`date`)) AS `day` FROM `tweets`')
   dbDisconnect(conn)
   data
 }
@@ -80,10 +80,5 @@ analyzeData <- function(data) {
   data$weight <- weights
   data$country <- countries
   data$region <- regions
-  data$hour <- as.integer((data$date %% 86400) / 3600)
   data
 }
-
-# data <- readData()
-# data <- analyzeData(data)
-# plot(aggregate(data$weight, list(Hour = data$hour), sum), type = 'h')
