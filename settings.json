@@ -1,5 +1,5 @@
 {  
-   "results":200,
+   "results":100,
    "countries":[  
       {  
          "name":"the Netherlands",
@@ -110,11 +110,39 @@
             "weer",
             "ochtend"
          ],
-         "geoCountryCode": "NL",
-         "specialTerm":"kopen"
+         "geoCountryCode":"NL",
+         "specialTerm":"kopen",
+         "twitterWeights":{  
+            "slapen":-0.4305288213,
+            "goodnight":-1,
+            "trusten":-0.8308185864,
+            "slaap lekker":0.9006933665,
+            "net wakker":0.2803891131,
+            "goeie morgen":1,
+            "goede morgen":0.7694297837
+         },
+         "gtrendsWeights":{  
+            "wekker":-0.2130199,
+            "bed tijd":0,
+            "bedtijd":0,
+            "facebook":0.7035816,
+            "koffie": -0.2055234,
+            "file":0.3610125,
+            "radio":0.8234904,
+            "weer":0.7393901,
+            "ochtend":1.00000000,
+	    "kopen": -1.0000000
+         }
       }
    ],
-   "sleepcycleTags": [
-		"start", "end", "sleep.quality", "time.in.bed", "wake.up", "sleep.notes", "heart.rate", "activity..steps."
-	]
+   "sleepcycleTags":[  
+      "start",
+      "end",
+      "sleep.quality",
+      "time.in.bed",
+      "wake.up",
+      "sleep.notes",
+      "heart.rate",
+      "activity..steps."
+   ]
 }
