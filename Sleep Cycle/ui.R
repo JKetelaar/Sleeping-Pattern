@@ -7,8 +7,9 @@ loadPackages(c(
   "shinythemes",
   "shinydashboard"
 ))
+source('./app.R')
 
-ui <- dashboardPage(
+shinyUI(dashboardPage(
   dashboardHeader(title = "Sleeping Pattern"),
   dashboardSidebar(sidebarMenu(
     menuItem(
@@ -36,31 +37,7 @@ ui <- dashboardPage(
           actionButton("do", "Submit")
         )
       ),
-      mainPanel(tableOutput('contents')))
+      mainPanel(h2('Out of bed frequency'), plotOutput('outbed'), h2('Contents of CSV'), tableOutput('contents')))
     )
   ))
-)
-
-server <- function(input, output) {
-  observeEvent(input$do, {
-    output$contents <- renderTable({
-      inFile <- input$file1
-      
-      if (is.null(inFile)) {
-        return(NULL)
-      }
-      
-      sleepy <-
-        read.csv(inFile$datapath,
-                 header = TRUE)
-      
-      source("./app.R")
-      frame <- toDataFrame(sleepy, input$username)
-      
-      insertIntoDatabase(frame)
-      return(frame)
-    })
-  })
-}
-
-shinyApp(ui, server)
+))
