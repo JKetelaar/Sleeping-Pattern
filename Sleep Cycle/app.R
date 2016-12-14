@@ -79,6 +79,12 @@ removeDatabaseDuplicates <- function(data, username) {
   return(data)
 }
 
+getWakeupTimes <- function(data){
+  bedtimeFreq <- table(format(df$endTime, "%H"))
+  timeLabels <- factor(names(bedtimeFreq), levels = names(bedtimeFreq))
+  wakeup_time <- data.frame(Count = bedtimeFreq, Time = timeLabels)
+}
+
 # Examples
 # sleep <-read.csv(file = "../data/sleep-cycle/sleepdata-kwdoyle.csv", header = TRUE, sep = ",")
 # result <- toDataFrame(sleep, 'asd')
