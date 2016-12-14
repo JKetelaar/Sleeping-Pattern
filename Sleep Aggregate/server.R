@@ -14,8 +14,8 @@ fixIfNoData <- function(df) {
   df
 }
 
-shinyServer(function(input, output) {
-  output$regionC <- renderUI({
+regionCAggregate <- function(input, output){
+  renderUI({
     regions <- list('All' = 0)
     i <- 1
     for (region in settings$countries[[as.integer(input$country)]]$regions) {
@@ -27,7 +27,10 @@ shinyServer(function(input, output) {
                 selected = 0,
                 choices = regions)
   })
-  output$sleep <- renderPlot({
+}
+
+sleepAggregate <- function(input, output){
+  renderPlot({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
     if (is.null(input$region)) {
@@ -74,8 +77,11 @@ shinyServer(function(input, output) {
     points(gData$Hour, combinedData, type = 'l', col = 'blue')
     out
     
-  })
-  output$totals <- renderPlot({
+  });
+}
+
+totalsAggregate <- function(input, output){
+ renderPlot({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
     if (is.null(input$region)) {
@@ -117,5 +123,5 @@ shinyServer(function(input, output) {
       )
     points(tData$Hour, tData$x, type = 'l', col = 'red')
     out
-  })
-})
+  });
+}

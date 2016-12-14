@@ -1,5 +1,6 @@
 TWITTER <- new.env()
 GTRENDS <- new.env()
+SLEEPCYCLE <- new.env()
 
 wd <- getwd()
 
@@ -12,6 +13,12 @@ setwd(wd)
 setwd('../GtrendsR/shiny')
 source('global.R', local = GTRENDS)
 gtrendsData <- GTRENDS$originalData
+
+setwd(wd)
+
+setwd('../Sleep Cycle')
+source('global.R', local = SLEEPCYCLE)
+databaseConnection <- SLEEPCYCLE$conn
 
 setwd(wd)
 

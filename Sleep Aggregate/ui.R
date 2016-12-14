@@ -10,7 +10,10 @@ getCountries <- function() {
   countries
 }
 
-shinyUI(fluidPage(
+uiAggregate <- function(){
+  tabItem(
+  tabName = "twitter",
+
   titlePanel('Data'),
   
   sidebarLayout(
@@ -48,4 +51,5 @@ shinyUI(fluidPage(
       plotOutput('totals')
     )
   )
-))
+)
+}

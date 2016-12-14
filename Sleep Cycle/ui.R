@@ -7,7 +7,6 @@ loadPackages(c(
   "shinythemes",
   "shinydashboard"
 ))
-source('./app.R')
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "Sleeping Pattern"),
