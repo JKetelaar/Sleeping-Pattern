@@ -4,14 +4,6 @@ loadPackages(c("lubridate", "plyr", "ggplot2", "rjson", "RMySQL"))
 settings <- fromJSON(file = "../settings.json")
 config <- fromJSON(file = "../config.json")
 
-conn <- dbConnect(
-  RMySQL::MySQL(),
-  host = config$mysql$host,
-  dbname = config$mysql$database,
-  user = config$mysql$user,
-  password = config$mysql$password
-)
-
 stringToMinutes <- function(x) {
   x <- as.numeric(x)
   x[1] * 60 + x[2]
@@ -79,9 +71,10 @@ removeDatabaseDuplicates <- function(data, username) {
   return(data)
 }
 
-getWakeupTimes <- function(data){
+getWakeupTimes <- function(data) {
   bedtimeFreq <- table(format(df$endTime, "%H"))
-  timeLabels <- factor(names(bedtimeFreq), levels = names(bedtimeFreq))
+  timeLabels <-
+    factor(names(bedtimeFreq), levels = names(bedtimeFreq))
   wakeup_time <- data.frame(Count = bedtimeFreq, Time = timeLabels)
 }
 

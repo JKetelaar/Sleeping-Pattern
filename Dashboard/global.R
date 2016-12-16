@@ -24,3 +24,13 @@ setwd(wd)
 
 settings <- TWITTER$settings
 config <- TWITTER$config
+
+getDatabaseConnection <- function() {
+  dbConnect(
+    RMySQL::MySQL(),
+    host = config$mysql$host,
+    dbname = config$mysql$database,
+    user = config$mysql$user,
+    password = config$mysql$password
+  )
+}

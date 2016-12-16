@@ -14,7 +14,7 @@ fixIfNoData <- function(df) {
   df
 }
 
-regionCAggregate <- function(input, output){
+regionCAggregate <- function(input, output) {
   renderUI({
     regions <- list('All' = 0)
     i <- 1
@@ -29,7 +29,7 @@ regionCAggregate <- function(input, output){
   })
 }
 
-sleepAggregate <- function(input, output){
+sleepAggregate <- function(input, output) {
   renderPlot({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
@@ -54,17 +54,30 @@ sleepAggregate <- function(input, output){
     if (input$method == 'mean') {
       method <- mean
     }
-    if(nrow(tData) == 0 || nrow(gData) == 0) {
-      msg <- plot(NULL, NULL, xlim = c(0, 100), ylim = c(0, 20), xaxt='n', ann=FALSE, yaxt='n', frame.plot=FALSE)
+    if (nrow(tData) == 0 || nrow(gData) == 0) {
+      msg <-
+        plot(
+          NULL,
+          NULL,
+          xlim = c(0, 100),
+          ylim = c(0, 20),
+          xaxt = 'n',
+          ann = FALSE,
+          yaxt = 'n',
+          frame.plot = FALSE
+        )
       text(8, 20, "No data")
       return(msg)
     }
-    gData <- aggregate(gData$weight, list(Hour = gData$hour), method)
-    tData <- aggregate(tData$weight, list(Hour = tData$hour), method)
+    gData <-
+      aggregate(gData$weight, list(Hour = gData$hour), method)
+    tData <-
+      aggregate(tData$weight, list(Hour = tData$hour), method)
     gData$x <- norm(gData$x) * 2 - 1
     tData$x <- norm(tData$x) * 2 - 1
-    combinedData <- fixIfNoData(gData)$x * 0.5 + fixIfNoData(tData)$x * 0.5
-   
+    combinedData <-
+      fixIfNoData(gData)$x * 0.5 + fixIfNoData(tData)$x * 0.5
+    
     out <-
       plot(
         gData$Hour,
@@ -77,11 +90,12 @@ sleepAggregate <- function(input, output){
     points(gData$Hour, combinedData, type = 'l', col = 'blue')
     out
     
-  });
+  })
+  
 }
 
-totalsAggregate <- function(input, output){
- renderPlot({
+totalsAggregate <- function(input, output) {
+  renderPlot({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
     if (is.null(input$region)) {
@@ -101,18 +115,29 @@ totalsAggregate <- function(input, output){
       gData <- gData[gData$day == input$days, ]
       tData <- tData[tData$day == input$days, ]
     }
-
-    if(nrow(tData) == 0 || nrow(gData) == 0) {
-      msg <- plot(NULL, NULL, xlim = c(0, 100), ylim = c(0, 20), xaxt='n', ann=FALSE, yaxt='n', frame.plot=FALSE)
+    
+    if (nrow(tData) == 0 || nrow(gData) == 0) {
+      msg <-
+        plot(
+          NULL,
+          NULL,
+          xlim = c(0, 100),
+          ylim = c(0, 20),
+          xaxt = 'n',
+          ann = FALSE,
+          yaxt = 'n',
+          frame.plot = FALSE
+        )
       text(8, 20, "No data")
       return(msg)
     }
     tData$one <- 1
-    gData <- aggregate(gData$percentage, list(Hour = gData$hour), sum)
+    gData <-
+      aggregate(gData$percentage, list(Hour = gData$hour), sum)
     tData <- aggregate(tData$one, list(Hour = tData$hour), sum)
     gData$x <- norm(gData$x)
     tData$x <- norm(tData$x)
-
+    
     out <-
       plot(
         gData$Hour,
@@ -123,5 +148,6 @@ totalsAggregate <- function(input, output){
       )
     points(tData$Hour, tData$x, type = 'l', col = 'red')
     out
-  });
+  })
+  
 }
