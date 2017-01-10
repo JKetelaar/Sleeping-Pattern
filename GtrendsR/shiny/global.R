@@ -4,22 +4,7 @@ loadPackages(c('rjson', 'RMySQL'))
 config <- fromJSON(file = '../../config.json')
 settings <- fromJSON(file = '../../settings.json')
 
-loadData <- function() {
-  conn <- dbConnect(
-    RMySQL::MySQL(),
-    host = config$mysql$host,
-    dbname = config$mysql$database,
-    user = config$mysql$user,
-    password = config$mysql$password
-  )
-  
-  
-  data <-
-    dbGetQuery(
-      conn,
-      'SELECT HOUR(`time`) AS `hour`, DAYOFWEEK(`time`) AS `day`, `keyword`, `percentage`, `location` FROM google_trends'
-    )
-  dbDisconnect(conn)
+applyWeights <- function(data) {
   data$weight <- 0
   for(country in settings$countries) {
     keywords <-
@@ -33,4 +18,20 @@ loadData <- function() {
   data
 }
 
-originalData <- loadData()
+loadData <- function() {
+  conn <- dbConnect(
+    RMySQL::MySQL(),
+    host = config$mysql$host,
+    dbname = config$mysql$database,
+    user = config$mysql$user,
+    password = config$mysql$password
+  )
+  
+  data <-
+    dbGetQuery(
+      conn,
+      'SELECT HOUR(`time`) AS `hour`, DAYOFWEEK(`time`) AS `day`, `keyword`, `percentage`, `location` FROM google_trends'
+    )
+  dbDisconnect(conn)
+  applyWeights(data)
+}

@@ -12,7 +12,7 @@ setwd(wd)
 
 setwd('../GtrendsR/shiny')
 source('global.R', local = GTRENDS)
-gtrendsData <- GTRENDS$originalData
+gtrendsData <- GTRENDS$loadData()
 
 setwd(wd)
 

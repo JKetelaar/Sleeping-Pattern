@@ -5,7 +5,8 @@ loadPackages(c(
   "lubridate",
   "plyr",
   "shinythemes",
-  "shinydashboard"
+  "shinydashboard",
+  "plotly"
 ))
 
 source("../Sleep Aggregate/ui.R")
@@ -24,7 +25,7 @@ shinyUI(dashboardPage(
       tabName = "sleepcycle",
       icon = icon("bed")
     ),
-    menuItem("Twitter",
+    menuItem("Analytics",
              tabName = "twitter",
              icon = icon("twitter"))
   )),
