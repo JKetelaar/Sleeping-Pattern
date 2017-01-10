@@ -43,7 +43,8 @@ uiAggregate <- function(){
         c('Total' = 'sum',
           'Mean' = 'mean'),
         selected = 'sum'
-      )
+      ), helpText("Extra info: Values close to 1 means that people are waking up. 
+                  Values close to -1 means that people are going to sleep.")
     ),
     
     mainPanel(
