@@ -47,8 +47,8 @@ uiAggregate <- function(){
     ),
     
     mainPanel(
-      plotOutput('sleep'),
-      plotOutput('totals')
+      plotlyOutput('sleep'),
+      plotlyOutput('totals')
     )
   )
 )

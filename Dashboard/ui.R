@@ -5,7 +5,8 @@ loadPackages(c(
   "lubridate",
   "plyr",
   "shinythemes",
-  "shinydashboard"
+  "shinydashboard",
+  "plotly"
 ))
 
 source("../Sleep Aggregate/ui.R")

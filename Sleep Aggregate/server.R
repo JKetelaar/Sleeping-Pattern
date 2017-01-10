@@ -30,7 +30,7 @@ regionCAggregate <- function(input, output) {
 }
 
 sleepAggregate <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
     if (is.null(input$region)) {
@@ -78,16 +78,17 @@ sleepAggregate <- function(input, output) {
     combinedData <-
       fixIfNoData(gData)$x * 0.5 + fixIfNoData(tData)$x * 0.5
     
-    out <-
-      plot(
-        gData$Hour,
-        gData$x,
-        type = 'h',
-        ylab = 'Asleep / Awake',
-        xlab = 'Hour'
-      )
-    points(tData$Hour, tData$x, type = 'l', col = 'red')
-    points(gData$Hour, combinedData, type = 'l', col = 'blue')
+    x <- list(
+      title = 'Hour'
+    )
+    y <- list(
+      title = 'Asleep / Awake'
+    )
+    
+    out <- plot_ly(gData, x = ~Hour, y = ~x, type = 'scatter', mode = 'lines', name = 'Gtrends') %>%
+    add_trace(x = tData$Hour, y = tData$x, name = 'Twitter') %>%
+    add_trace(x = gData$Hour, y = combinedData, name = 'Aggregated') %>%
+    layout(showlegend = FALSE, xaxis = x, yaxis = y)
     out
     
   })
@@ -95,7 +96,7 @@ sleepAggregate <- function(input, output) {
 }
 
 totalsAggregate <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     country <- settings$countries[[as.integer(input$country)]]
     index <- as.integer(input$region)
     if (is.null(input$region)) {
@@ -138,15 +139,17 @@ totalsAggregate <- function(input, output) {
     gData$x <- norm(gData$x)
     tData$x <- norm(tData$x)
     
-    out <-
-      plot(
-        gData$Hour,
-        gData$x,
-        type = 'h',
-        ylab = 'Frequency',
-        xlab = 'Hour'
-      )
-    points(tData$Hour, tData$x, type = 'l', col = 'red')
+    
+    x <- list(
+      title = 'Hour'
+    )
+    y <- list(
+      title = 'Frequency'
+    )
+    
+    out <- plot_ly(gData, x = ~Hour, y = ~x,  type = 'scatter', mode = 'lines', name = 'Gtrends') %>%
+    add_trace(x = tData$Hour, y = tData$x, name = 'Twitter') %>%
+    layout(showlegend = FALSE, xaxis = x, yaxis = y)
     out
   })
   
