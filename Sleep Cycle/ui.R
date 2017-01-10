@@ -13,7 +13,7 @@ uiSleepCycle <- function() {
     tabName = "sleepcycle",
     titlePanel("Take a look at the general data!"),
     sidebarLayout(
-      sidebarPanel(wellPanel(h5('Soon to cum'))),
+      sidebarPanel(wellPanel(h5('Soon to come'))),
       mainPanel(
         h2('Sleep Quality per minute'),
         plotOutput('gTimeInBed'),
