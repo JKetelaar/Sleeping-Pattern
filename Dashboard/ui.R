@@ -24,7 +24,7 @@ shinyUI(dashboardPage(
       tabName = "sleepcycle",
       icon = icon("bed")
     ),
-    menuItem("Twitter",
+    menuItem("Analytics",
              tabName = "twitter",
              icon = icon("twitter"))
   )),
