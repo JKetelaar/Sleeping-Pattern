@@ -88,7 +88,7 @@ sleepAggregate <- function(input, output) {
     out <- plot_ly(gData, x = ~Hour, y = ~x, type = 'scatter', mode = 'lines', name = 'Gtrends') %>%
     add_trace(x = tData$Hour, y = tData$x, name = 'Twitter') %>%
     add_trace(x = gData$Hour, y = combinedData, name = 'Aggregated') %>%
-    layout(showlegend = FALSE, xaxis = x, yaxis = y)
+    layout(showlegend = TRUE, xaxis = x, yaxis = y)
     out
     
   })
@@ -149,7 +149,7 @@ totalsAggregate <- function(input, output) {
     
     out <- plot_ly(gData, x = ~Hour, y = ~x,  type = 'scatter', mode = 'lines', name = 'Gtrends') %>%
     add_trace(x = tData$Hour, y = tData$x, name = 'Twitter') %>%
-    layout(showlegend = FALSE, xaxis = x, yaxis = y)
+    layout(showlegend = TRUE, xaxis = x, yaxis = y)
     out
   })
   
