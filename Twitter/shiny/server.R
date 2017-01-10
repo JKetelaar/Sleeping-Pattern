@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
     if(input$method == 'mean') {
       method <- mean
     }
-    plot(aggregate(data$weight, list(Hour = data$hour), method), type = 'h', ylab = 'Awake / Asleep')
+    plot(aggregate(data$weight, list(Hour = data$hour), method), type = 'h', ylab = 'Asleep / Awake')
   })
   
 })

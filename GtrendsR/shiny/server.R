@@ -18,7 +18,7 @@ shinyServer(function(input, output) {
     data <- aggregate(data$weight, list(Hour = data$hour), method)
 
     data$x <- norm(data$x) * 2 - 1;
-    plot(data$Hour, data$x, type = 'h', ylab = 'Awake / Asleep', xlab = 'Hour')
+    plot(data$Hour, data$x, type = 'h', ylab = 'Asleep / Awake', xlab = 'Hour')
  
   })
   

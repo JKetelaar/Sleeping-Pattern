@@ -83,7 +83,7 @@ sleepAggregate <- function(input, output) {
         gData$Hour,
         gData$x,
         type = 'h',
-        ylab = 'Awake / Asleep',
+        ylab = 'Asleep / Awake',
         xlab = 'Hour'
       )
     points(tData$Hour, tData$x, type = 'l', col = 'red')
