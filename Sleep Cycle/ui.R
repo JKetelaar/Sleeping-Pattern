@@ -14,8 +14,8 @@ uiSleepCycle <- function() {
     titlePanel("Take a look at the general data!"),
     p(HTML(
       paste(
-        "Here you can see a bunch of visualisations providing information about the data we've gathered among the project.",
-        "This data is gathered thru online searching and anonymised upload data.",
+        "Here you can see a bunch of visualisations providing information about the data we've gathered during the project.",
+        "This data is gathered from online sources and uploaded, anonymised data.",
         sep = "<br/>"
       )
     )),
