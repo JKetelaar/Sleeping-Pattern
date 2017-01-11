@@ -96,7 +96,7 @@ contentsSleepCycle <- function(input, output) {
     
     sleepy <-
       read.csv(inFile$datapath,
-               header = TRUE)
+               header = TRUE, sep = ";")
     
     frame <- toDataFrame(sleepy, input$username)
     
