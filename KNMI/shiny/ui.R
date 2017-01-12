@@ -6,7 +6,9 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(),
     mainPanel(
-       plotOutput("weather")
+       plotlyOutput("weather"),
+       br(),
+       plotlyOutput("frequency")
     )
   )
 ))
