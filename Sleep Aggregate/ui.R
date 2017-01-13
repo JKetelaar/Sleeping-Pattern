@@ -19,7 +19,7 @@ uiAggregate <- function(){
   titlePanel('Data'),
   
   sidebarLayout(
-    sidebarPanel(
+    sidebarPanel(style = "position: fixed; overflow: visible; top: 125px; width: 25%;  ",
       selectInput(
         'country', choices = getCountries(), label = 'Country', selected = 1
       ),
