@@ -1,6 +1,6 @@
 library(shiny)
 
-weatherByDay <- readData()
+weatherByDay <- KNMI$readData()
 
 weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
 
@@ -23,8 +23,8 @@ weatherWithAnalyticsData <- function(input, output)  {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = aggData$day,
-        y = aggData$a,
+        x = KNMI$aggData$day,
+        y = KNMI$aggData$a,
         name = 'Aggregated',
         yaxis = "y2"
       ) %>%
@@ -74,14 +74,14 @@ weatherWithFrequency <- function(input, output) {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = tFreq$day,
-        y = tFreq$x,
+        x = KNMI$tFreq$day,
+        y = KNMI$tFreq$x,
         name = 'Tweet Frequency',
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = gFreq$day,
-        y = gFreq$x,
+        x = KNMI$gFreq$day,
+        y = KNMI$gFreq$x,
         name = 'Search Frequency',
         yaxis = "y2"
       ) %>%

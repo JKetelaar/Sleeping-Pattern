@@ -1,6 +1,7 @@
 TWITTER <- new.env()
 GTRENDS <- new.env()
 SLEEPCYCLE <- new.env()
+KNMI <- new.env()
 
 wd <- getwd()
 
@@ -24,6 +25,17 @@ setwd(wd)
 
 settings <- TWITTER$settings
 config <- TWITTER$config
+
+KNMI$TWITTER <- TWITTER
+KNMI$GTRENDS <- GTRENDS
+KNMI$config <- config
+KNMI$settings <- settings
+
+setwd('../KNMI/shiny')
+source('global.R', local = KNMI)
+
+setwd(wd)
+
 
 getDatabaseConnection <- function() {
   dbConnect(

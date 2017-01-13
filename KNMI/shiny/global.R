@@ -1,19 +1,9 @@
 source('../../common/common.R')
 loadPackages(c('rjson', 'RMySQL', 'plotly'))
 
-TWITTER <- new.env()
-GTRENDS <- new.env()
-wd <- getwd()
 
-setwd('../../Twitter/shiny')
-source('global.R', local = TWITTER)
-setwd(wd)
-setwd('../../GtrendsR/shiny')
-source('global.R', local = GTRENDS)
-setwd(wd)
-
-config <- fromJSON(file = '../../config.json')
-settings <- fromJSON(file = '../../settings.json')
+#config <- fromJSON(file = '../../config.json')
+#settings <- fromJSON(file = '../../settings.json')
 
 readData <- function() {
   conn <- dbConnect(RMySQL::MySQL(),
