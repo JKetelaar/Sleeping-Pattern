@@ -15,22 +15,24 @@ shinyServer(function(input, output) {
                    output$outbed <- outbedSleepCycle(input, output)
                    output$contents <-
                      contentsSleepCycle(input, output)
+                   output$avgTempPerWeek <- avgTempPerWeek(input, output)
                  })
                  
                  # Sleep Aggregate
-                 incProgress(0.2, detail = "Plotting region aggregate")
+                 incProgress(0.3, detail = "Plotting region aggregate")
                  output$regionC <- regionCAggregate(input, output)
                  
-                 incProgress(0.3, detail = "Plotting sleep aggregate")
+                 incProgress(0.4, detail = "Plotting sleep aggregate")
                  output$sleep <- sleepAggregate(input, output)
                  
-                 incProgress(0.4, detail = "Plotting total aggregate")
+                 incProgress(0.5, detail = "Plotting total aggregate")
                  output$totals <- totalsAggregate(input, output)
                  output$weather <- weatherWithAnalyticsData(input, output)
                  output$frequency <- weatherWithFrequency(input, output)
+            
                  
                  # General Sleep Cycle
-                 incProgress(0.6, detail = "Plotting time in bed")
+                 incProgress(0.7, detail = "Plotting time in bed")
                  output$gTimeInBed <-
                    generalTimeInBed(input, output)
                  

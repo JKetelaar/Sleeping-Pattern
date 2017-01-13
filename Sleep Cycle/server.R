@@ -64,6 +64,41 @@ getAllData <- function() {
   return(data)
 }
 
+getWeatherData <- function(sleep) {
+  conn <- getDatabaseConnection()
+  data <- dbReadTable(conn, 'knmi')
+  dbDisconnect(conn)
+  
+  sleep$End <- as.character(sleep$End)
+  sleep$Date <- sapply(strsplit(sleep$End, " "))
+  sleep$Date <- strptime(sleep$Date, format = "%Y-%m-%d")
+  
+  weather <- data
+  
+  weather$Date <- as.Date(weather$date)
+  weather$Time <-
+    format(as.POSIXct(weather$date), format = "%H:%M:%S")
+  
+  # Take the avarage weather, from Utrecht
+  weather <- subset(weather, source = "IUTRECHT425")
+  
+  meanTempDay <-
+    weather %>% group_by(Date) %>% summarise(temp = mean(temperature), wind = mean(wind))
+  
+  sleep$Date < as.character(sleep$Date)
+  meanTempDay$Date <- as.character(meanTempDay$Date)
+  
+  merged <- merge(x = sleep, y = meanTempDay, by = "Date")
+  
+  merged$Week_Number <-
+    strftime(as.POSIXlt(merged$Date), format = "%W")
+  
+  dataSet <-
+    merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(Sleep.Quality))
+  
+  return(dataSet)
+}
+
 removeDatabaseDuplicates <- function(data, username) {
   conn <- getDatabaseConnection()
   rs <-
@@ -107,7 +142,7 @@ contentsSleepCycle <- function(input, output) {
 }
 
 outbedSleepCycle <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     inFile <- input$file1
     
     if (is.null(inFile)) {
@@ -116,7 +151,7 @@ outbedSleepCycle <- function(input, output) {
     
     sleepy <-
       read.csv(inFile$datapath,
-               header = TRUE)
+               header = TRUE, sep = ";")
     
     frame <- toDataFrame(sleepy, input$username)
     
@@ -126,7 +161,8 @@ outbedSleepCycle <- function(input, output) {
     wakeup_time <-
       data.frame(Count = bedtimeFreq, Time = timeLabels)
     
-    ggplot(data = wakeup_time, aes(x = wakeup_time$Time, y = wakeup_time$Count.Freq)) +
+    p <-
+      ggplot(data = wakeup_time, aes(x = wakeup_time$Time, y = wakeup_time$Count.Freq)) +
       geom_bar(stat = "identity",
                color = "black",
                fill = "lightblue") +
@@ -134,20 +170,24 @@ outbedSleepCycle <- function(input, output) {
       ylab("Frequency") +
       ggtitle("Got out of bed") +
       theme_bw()
+    
+    return(ggplotly(p))
   })
 }
 
 generalTimeInBed <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     p <- ggplot(getAllData(), aes(in_bed, quality)) + theme_bw()
     p <-
       p + geom_point() + ggtitle("Sleep Quality vs. Time in Bed") + xlab("Time in Bed in Minutes") + ylab("Sleep Quality in %")
-    p + geom_smooth(method = lm)
+    p <- p + geom_smooth(method = lm)
+    
+    return(ggplotly(p))
   })
 }
 
 generalTimeInBedMonth <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     data <- getAllData()
     data$end <- as.character(data$end)
     
@@ -163,14 +203,42 @@ generalTimeInBedMonth <- function(input, output) {
     p <- ggplot(group, aes(my, x)) + theme_bw()
     p <-
       p + ggtitle("Sleep Quality by Month Time in Bed") + xlab("Month") + ylab("Sleep Quality in %")
-    p + geom_bar(stat = "identity",
-                 colour = "black",
-                 fill = "lightblue")
+    p <- p + geom_bar(stat = "identity",
+                      colour = "black",
+                      fill = "lightblue")
+    
+    return(ggplotly(p))
+  })
+}
+
+avgTempPerWeek <- function(input, output) {
+  renderPlotly({
+    inFile <- input$file1
+    
+    if (is.null(inFile)) {
+      return(NULL)
+    }
+    
+    sleepy <-
+      read.csv(inFile$datapath,
+               header = TRUE, sep = ";")
+    
+    weather <- getWeatherData(sleepy)
+    
+    p <-
+      ggplot(data = x1, aes(x = Week_number, y = temp, fill = quality)) +
+      geom_bar(stat = "identity") +
+      theme_bw() +
+      ggtitle("Average temperature per Week") +
+      xlab("Week number") +
+      ylab("Temperature (in degrees)")
+    
+    return(ggplotly(p))
   })
 }
 
 generalSleepDuration <- function(input, output) {
-  renderPlot({
+  renderPlotly({
     data <- getAllData()
     data$end <- as.character(data$end)
     
@@ -187,6 +255,7 @@ generalSleepDuration <- function(input, output) {
       )
     p <-
       p + ggtitle("Sleep Duration Over Time") + xlab("Date") + ylab("Duration in Minutes")
-    p + geom_smooth(method = loess)
+    p <- p + geom_smooth(method = loess)
+    return(ggplotly(p))
   })
 }

@@ -5,7 +5,10 @@ loadPackages(c(
   "lubridate",
   "plyr",
   "shinythemes",
-  "shinydashboard"
+  "shinydashboard",
+  "plotly",
+  "dplyr",
+  "lubridate"
 ))
 
 uiSleepCycle <- function() {
@@ -24,13 +27,13 @@ uiSleepCycle <- function() {
       sidebarPanel(wellPanel(h5('Soon to come'))),
       mainPanel(
         h2('Sleep Quality per minute'),
-        plotOutput('gTimeInBed'),
+        plotlyOutput('gTimeInBed'),
         
         h2('Sleep Quality by month'),
-        plotOutput('gTimeInBedMonth'),
+        plotlyOutput('gTimeInBedMonth'),
         
         h2('Sleep Duration'),
-        plotOutput('gSleepDuration')
+        plotlyOutput('gSleepDuration')
       )
     )
   )
@@ -57,7 +60,14 @@ uiMySleepCycle <- function() {
       )),
       mainPanel(
         h2('Out of bed frequency'),
-        plotOutput('outbed'),
+        plotlyOutput('outbed'),
+        
+        h2('Avarage temperature per week'),
+        plotlyOutput('avgTempPerWeek'),
+        
+        #h2('Out of bed frequency'),
+        #plotlyOutput('outbed'),
+        
         h2('Contents of CSV'),
         tableOutput('contents')
       )
