@@ -70,7 +70,7 @@ getWeatherData <- function(sleep) {
   dbDisconnect(conn)
   
   sleep$End <- as.character(sleep$End)
-  sleep$Date <- sapply(strsplit(sleep$End, " "))
+  sleep$Date <- sapply(strsplit(sleep$End, " "),"[[",1)
   sleep$Date <- strptime(sleep$Date, format = "%Y-%m-%d")
   
   weather <- data
