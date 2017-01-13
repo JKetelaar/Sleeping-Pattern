@@ -10,6 +10,8 @@ getCountries <- function() {
   countries
 }
 
+source("../KNMI/shiny/ui.R")
+
 uiAggregate <- function(){
   tabItem(
   tabName = "twitter",
@@ -50,7 +52,9 @@ uiAggregate <- function(){
     mainPanel(
       plotlyOutput('sleep'),
       br(),
-      plotlyOutput('totals')
+      plotlyOutput('totals'),
+      br(),
+      uiKnmi()
     )
   )
 )

@@ -2,6 +2,7 @@ library(shiny)
 
 source("../Sleep Aggregate/server.R")
 source("../Sleep Cycle/server.R")
+source("../KNMI/shiny/server.R")
 
 shinyServer(function(input, output) {
   withProgress(message = "Loading data",
@@ -25,6 +26,8 @@ shinyServer(function(input, output) {
                  
                  incProgress(0.4, detail = "Plotting total aggregate")
                  output$totals <- totalsAggregate(input, output)
+                 output$weather <- weatherWithAnalyticsData(input, output)
+                 output$frequency <- weatherWithFrequency(input, output)
                  
                  # General Sleep Cycle
                  incProgress(0.6, detail = "Plotting time in bed")

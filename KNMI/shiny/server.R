@@ -4,10 +4,10 @@ weatherByDay <- readData()
 
 weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
 
-shinyServer(function(input, output) {
-  x <- list(title = 'Day')
-  y <- list(title = 'Temp(Celcius)')
-  
+x <- list(title = 'Day')
+y <- list(title = 'Temp(Celcius)')
+
+weatherWithAnalyticsData <- function(input, output)  {
   output$weather <- renderPlotly({
     day <- weatherByDay[weatherByDay$night == 0,]
     night <- weatherByDay[weatherByDay$night == 1,]
@@ -44,6 +44,7 @@ shinyServer(function(input, output) {
       ) %>%
       layout(
         showlegend = TRUE,
+        title = 'Weather and Analytics Data',
         xaxis = x,
         yaxis = y,
         yaxis2 = list(
@@ -54,7 +55,9 @@ shinyServer(function(input, output) {
       )
     
   })
-  
+}
+
+weatherWithFrequency <- function(input, output) {
   output$frequency <- renderPlotly({
     day <- weatherByDay[weatherByDay$night == 0,]
     night <- weatherByDay[weatherByDay$night == 1,]
@@ -84,6 +87,7 @@ shinyServer(function(input, output) {
       ) %>%
       layout(
         showlegend = TRUE,
+        title = 'Weather, Tweet Frequency and Search Frequency',
         xaxis = x,
         yaxis = y,
         yaxis2 = list(
@@ -95,5 +99,4 @@ shinyServer(function(input, output) {
     
     
   })
-  
-})
+}
