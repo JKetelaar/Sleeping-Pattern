@@ -69,9 +69,12 @@ getWeatherData <- function(sleep) {
   data <- dbReadTable(conn, 'knmi')
   dbDisconnect(conn)
   
-  sleep$End <- as.character(sleep$End)
+  print(head(sleep))
+  
+  sleep$End <- as.character(sleep$end)
   sleep$Date <- sapply(strsplit(sleep$End, " "),"[[",1)
-  sleep$Date <- strptime(sleep$Date, format = "%Y-%m-%d")
+  
+  print(head(sleep))
   
   weather <- data
   
@@ -80,7 +83,7 @@ getWeatherData <- function(sleep) {
     format(as.POSIXct(weather$date), format = "%H:%M:%S")
   
   # Take the avarage weather, from Utrecht
-  weather <- subset(weather, source = "IUTRECHT425")
+  weather <- subset(weather, source = "INOORDBR196")
   
   meanTempDay <-
     weather %>% group_by(Date) %>% summarise(temp = mean(temperature), wind = mean(wind))
@@ -94,7 +97,7 @@ getWeatherData <- function(sleep) {
     strftime(as.POSIXlt(merged$Date), format = "%W")
   
   dataSet <-
-    merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(Sleep.Quality))
+    merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(quality))
   
   return(dataSet)
 }
@@ -223,15 +226,18 @@ avgTempPerWeek <- function(input, output) {
       read.csv(inFile$datapath,
                header = TRUE, sep = ";")
     
-    weather <- getWeatherData(sleepy)
+    weather <- getWeatherData(toDataFrame(sleepy, input$username))
     
     p <-
-      ggplot(data = x1, aes(x = Week_number, y = temp, fill = quality)) +
+      ggplot(data = weather, aes(x = Week_Number, y = temp, fill = quality)) +
       geom_bar(stat = "identity") +
       theme_bw() +
       ggtitle("Average temperature per Week") +
       xlab("Week number") +
       ylab("Temperature (in degrees)")
+    
+    print(weather)
+    
     
     return(ggplotly(p))
   })
