@@ -7,10 +7,29 @@ weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
 x <- list(title = 'Day')
 y <- list(title = 'Temp(Celcius)')
 
+modifyTemp <- function(region, data) {
+  if(is.null(region)) {
+    data <- aggregate(data$temperature, list(day = data$day), mean)
+    data$temperature <- data$x
+  } else {
+    data <- data[data$source == region$station,]
+  }
+  data
+}
+
 weatherWithAnalyticsData <- function(input, output)  {
   output$weather <- renderPlotly({
-    day <- weatherByDay[weatherByDay$night == 0,]
-    night <- weatherByDay[weatherByDay$night == 1,]
+    country <- settings$countries[[as.integer(input$country)]]
+    index <- as.integer(input$region)
+    if (is.null(input$region)) {
+      index <- 0
+    }
+    region <- NULL
+    if (index > 0 && index <= length(country$regions)) {
+      region <- country$regions[[index]]
+    }
+    day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
+    night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     plot_ly(
       night,
       x = ~ day,
@@ -59,8 +78,17 @@ weatherWithAnalyticsData <- function(input, output)  {
 
 weatherWithFrequency <- function(input, output) {
   output$frequency <- renderPlotly({
-    day <- weatherByDay[weatherByDay$night == 0,]
-    night <- weatherByDay[weatherByDay$night == 1,]
+    country <- settings$countries[[as.integer(input$country)]]
+    index <- as.integer(input$region)
+    if (is.null(input$region)) {
+      index <- 0
+    }
+    region <- NULL
+    if (index > 0 && index <= length(country$regions)) {
+      region <- country$regions[[index]]
+    }
+    day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
+    night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     
     plot_ly(
       night,

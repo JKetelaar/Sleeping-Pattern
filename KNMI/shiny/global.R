@@ -11,7 +11,7 @@ readData <- function() {
                     dbname = config$mysql$database,
                     user = config$mysql$user,
                     password = config$mysql$password)
-  data <- dbGetQuery(conn, 'SELECT AVG(`temperature`) AS `temperature`, AVG(`rain`) AS `rain`, DATE(`date`) AS `day`, (HOUR(`date`) > 17 OR HOUR(`date`) < 5) AS `night` FROM (SELECT * FROM `knmi` WHERE `temperature` > -573.3) AS `fixd` GROUP BY `night`, `day`')
+  data <- dbGetQuery(conn, 'SELECT `source`, AVG(`temperature`) AS `temperature`, AVG(`rain`) AS `rain`, DATE(`date`) AS `day`, (HOUR(`date`) > 17 OR HOUR(`date`) < 5) AS `night` FROM (SELECT * FROM `knmi` WHERE `temperature` > -573.3) AS `fixd` GROUP BY `source`, `night`, `day`')
   dbDisconnect(conn)
   data
 }
