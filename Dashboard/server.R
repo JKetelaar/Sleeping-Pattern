@@ -6,7 +6,7 @@ source("../KNMI/shiny/server.R")
 
 shinyServer(function(input, output) {
   withProgress(message = "Loading data",
-               detail = "Downloading dank memes",
+               detail = "Loading data",
                value = 0,
                {
                  incProgress(0.1, detail = "Create observe events")
