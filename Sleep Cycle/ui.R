@@ -28,6 +28,7 @@ uiSleepCycle <- function() {
     sidebarLayout(
       sidebarPanel(wellPanel(h5('Soon to come'))),
       mainPanel(
+        pdf(NULL),
         h2('Sleep Quality per minute'),
         plotlyOutput('gTimeInBed'),
         
