@@ -64,7 +64,7 @@ getAllData <- function() {
   return(data)
 }
 
-getWeatherData <- function(sleep) {
+getWeatherData <- function(sleep, summarise) {
   conn <- getDatabaseConnection()
   data <- dbReadTable(conn, 'knmi')
   dbDisconnect(conn)
@@ -92,10 +92,14 @@ getWeatherData <- function(sleep) {
   merged$Week_Number <-
     strftime(as.POSIXlt(merged$Date), format = "%W")
   
-  dataSet <-
-    merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(quality))
-  
-  return(dataSet)
+  if (summarise == T){
+    dataSet <-
+      merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(quality))
+    
+    return(dataSet)
+  }else{
+    return(merged)
+  }
 }
 
 removeDatabaseDuplicates <- function(data, username) {
@@ -222,7 +226,7 @@ avgTempPerWeek <- function(input, output) {
       read.csv(inFile$datapath,
                header = TRUE, sep = ";")
     
-    weather <- getWeatherData(toDataFrame(sleepy, input$username))
+    weather <- getWeatherData(toDataFrame(sleepy, input$username), T)
     
     p <-
       ggplot(data = weather, aes(x = Week_Number, y = temp, fill = quality)) +
@@ -236,19 +240,25 @@ avgTempPerWeek <- function(input, output) {
   })
 }
 
+inputFileToWeatherData <- function(input){
+  inFile <- input$file1
+  
+  if (is.null(inFile)) {
+    return(NULL)
+  }
+  
+  sleepy <-
+    read.csv(inFile$datapath,
+             header = TRUE, sep = ";")
+  
+  weather <- getWeatherData(toDataFrame(sleepy, input$username), F)
+  
+  return(weather)
+}
+
 tempWindSleepQuality <- function(input, output) {
   renderPlotly({
-    inFile <- input$file1
-    
-    if (is.null(inFile)) {
-      return(NULL)
-    }
-    
-    sleepy <-
-      read.csv(inFile$datapath,
-               header = TRUE, sep = ";")
-    
-    weather <- getWeatherData(toDataFrame(sleepy, input$username))
+    weather <- inputFileToWeatherData(input)
     
     p <-
       ggplot(data = weather, aes(x = temp, y = wind, color = quality)) +

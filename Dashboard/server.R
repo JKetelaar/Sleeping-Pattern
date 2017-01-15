@@ -16,8 +16,10 @@ shinyServer(function(input, output) {
                    output$contents <-
                      contentsSleepCycle(input, output)
                    
-                   output$avgTempPerWeek <- avgTempPerWeek(input, output)
-                   output$tempWindSleepQuality <- tempWindSleepQuality(input, output)
+                   output$avgTempPerWeek <-
+                     avgTempPerWeek(input, output)
+                   output$tempWindSleepQuality <-
+                     tempWindSleepQuality(input, output)
                  })
                  
                  # Sleep Aggregate
@@ -29,8 +31,10 @@ shinyServer(function(input, output) {
                  
                  incProgress(0.5, detail = "Plotting total aggregate")
                  output$totals <- totalsAggregate(input, output)
-                 output$weather <- weatherWithAnalyticsData(input, output)
-                 output$frequency <- weatherWithFrequency(input, output)
+                 output$weather <-
+                   weatherWithAnalyticsData(input, output)
+                 output$frequency <-
+                   weatherWithFrequency(input, output)
                  
                  # General Sleep Cycle
                  incProgress(0.7, detail = "Plotting time in bed")
