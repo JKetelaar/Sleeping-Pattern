@@ -1,15 +1,17 @@
 source("../common/common.R")
-loadPackages(c(
-  "shiny",
-  "ggplot2",
-  "lubridate",
-  "plyr",
-  "shinythemes",
-  "shinydashboard",
-  "plotly",
-  "dplyr",
-  "lubridate"
-))
+loadPackages(
+  c(
+    "shiny",
+    "ggplot2",
+    "lubridate",
+    "plyr",
+    "shinythemes",
+    "shinydashboard",
+    "plotly",
+    "dplyr",
+    "lubridate"
+  )
+)
 
 uiSleepCycle <- function() {
   tabItem(

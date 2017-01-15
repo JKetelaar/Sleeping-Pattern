@@ -92,12 +92,12 @@ getWeatherData <- function(sleep, summarise) {
   merged$Week_Number <-
     strftime(as.POSIXlt(merged$Date), format = "%W")
   
-  if (summarise == T){
+  if (summarise == T) {
     dataSet <-
       merged %>% group_by(Week_Number) %>% summarise(temp = mean(temp), quality = mean(quality))
     
     return(dataSet)
-  }else{
+  } else{
     return(merged)
   }
 }
@@ -226,7 +226,8 @@ avgTempPerWeek <- function(input, output) {
       read.csv(inFile$datapath,
                header = TRUE, sep = ";")
     
-    weather <- getWeatherData(toDataFrame(sleepy, input$username), T)
+    weather <-
+      getWeatherData(toDataFrame(sleepy, input$username), T)
     
     p <-
       ggplot(data = weather, aes(x = Week_Number, y = temp, fill = quality)) +
@@ -240,7 +241,7 @@ avgTempPerWeek <- function(input, output) {
   })
 }
 
-inputFileToWeatherData <- function(input){
+inputFileToWeatherData <- function(input) {
   inFile <- input$file1
   
   if (is.null(inFile)) {
