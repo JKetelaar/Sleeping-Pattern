@@ -317,18 +317,18 @@ generalTempWindSleepQuality <- function(input, output) {
   })
 }
 
-sleepQualityTempPerDate <- function(input, output){
+sleepQualityTempPerDate <- function(input, output) {
   renderPlotly({
     weather <- inputFileToWeatherData(input)
     
     p <-
-      ggplot(data = weather, aes(x = Date, y = quality, fill = temp)) + 
+      ggplot(data = weather, aes(x = Date, y = quality, fill = temp)) +
       geom_bar(stat = "identity") +
       coord_flip() +
       xlab("Sleep quality") +
       ylab("Date") +
       ggtitle("Sleep quality per date") +
-      theme_bw()  
+      theme_bw()
     return(ggplotly(p))
   })
 }
