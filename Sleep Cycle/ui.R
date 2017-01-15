@@ -65,8 +65,8 @@ uiMySleepCycle <- function() {
         h2('Avarage temperature per week'),
         plotlyOutput('avgTempPerWeek'),
         
-        #h2('Out of bed frequency'),
-        #plotlyOutput('outbed'),
+        h2('Effects of temperature and wind on sleep quality'),
+        plotlyOutput('tempWindSleepQuality'),
         
         h2('Contents of CSV'),
         tableOutput('contents')

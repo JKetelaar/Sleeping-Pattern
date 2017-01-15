@@ -69,12 +69,8 @@ getWeatherData <- function(sleep) {
   data <- dbReadTable(conn, 'knmi')
   dbDisconnect(conn)
   
-  print(head(sleep))
-  
   sleep$End <- as.character(sleep$end)
-  sleep$Date <- sapply(strsplit(sleep$End, " "),"[[",1)
-  
-  print(head(sleep))
+  sleep$Date <- sapply(strsplit(sleep$End, " "), "[[", 1)
   
   weather <- data
   
@@ -236,8 +232,31 @@ avgTempPerWeek <- function(input, output) {
       xlab("Week number") +
       ylab("Temperature (in degrees)")
     
-    print(weather)
+    return(ggplotly(p))
+  })
+}
+
+tempWindSleepQuality <- function(input, output) {
+  renderPlotly({
+    inFile <- input$file1
     
+    if (is.null(inFile)) {
+      return(NULL)
+    }
+    
+    sleepy <-
+      read.csv(inFile$datapath,
+               header = TRUE, sep = ";")
+    
+    weather <- getWeatherData(toDataFrame(sleepy, input$username))
+    
+    p <-
+      ggplot(data = weather, aes(x = temp, y = wind, color = quality)) +
+      geom_point() +
+      xlab("Temperature (in degrees)") +
+      ylab("Wind (in km/h)") +
+      ggtitle("Effects of temperature and wind on sleep quality") +
+      theme_bw()
     
     return(ggplotly(p))
   })
