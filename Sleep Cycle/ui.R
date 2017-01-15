@@ -35,7 +35,13 @@ uiSleepCycle <- function() {
         plotlyOutput('gTimeInBedMonth'),
         
         h2('Sleep Duration'),
-        plotlyOutput('gSleepDuration')
+        plotlyOutput('gSleepDuration'),
+        
+        h2('Avarage temperature per week'),
+        plotlyOutput('gAvgTempPerWeek'),
+        
+        h2('Effects of temperature and wind on sleep quality'),
+        plotlyOutput('gTempWindSleepQuality')
       )
     )
   )

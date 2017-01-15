@@ -41,12 +41,20 @@ shinyServer(function(input, output) {
                  output$gTimeInBed <-
                    generalTimeInBed(input, output)
                  
-                 incProgress(0.8, detail = "Plotting sleep duration")
+                 incProgress(0.75, detail = "Plotting sleep duration")
                  output$gSleepDuration <-
                    generalSleepDuration(input, output)
                  
-                 incProgress(1, detail = "Plotting time in bed, monthly")
+                 incProgress(0.8, detail = "Plotting time in bed, monthly")
                  output$gTimeInBedMonth <-
                    generalTimeInBedMonth(input, output)
+                 
+                 incProgress(0.85, detail = "Plotting wind & sleep quality")
+                 output$gTempWindSleepQuality <-
+                   generalTempWindSleepQuality(input, output)
+                 
+                 incProgress(0.9, detail = "Plotting avarage temperature")
+                 output$gAvgTempPerWeek <-
+                   generalAvgTempPerWeek(input, output)
                })
 })
