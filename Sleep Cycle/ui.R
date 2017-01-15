@@ -76,6 +76,9 @@ uiMySleepCycle <- function() {
         h2('Effects of temperature and wind on sleep quality'),
         plotlyOutput('tempWindSleepQuality'),
         
+        h2('Sleep quality per date, combined with the temperature'),
+        plotlyOutput('sleepQualityTempPerDate'),
+        
         h2('Contents of CSV'),
         tableOutput('contents')
       )

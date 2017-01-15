@@ -273,7 +273,7 @@ tempWindSleepQuality <- function(input, output) {
   })
 }
 
-generalAvgTempPerWeek <- function(input, output){
+generalAvgTempPerWeek <- function(input, output) {
   renderPlotly({
     data <- getAllData()
     data$end <- as.character(data$end)
@@ -295,7 +295,7 @@ generalAvgTempPerWeek <- function(input, output){
   })
 }
 
-generalTempWindSleepQuality <- function(input, output){
+generalTempWindSleepQuality <- function(input, output) {
   renderPlotly({
     data <- getAllData()
     data$end <- as.character(data$end)
@@ -313,6 +313,22 @@ generalTempWindSleepQuality <- function(input, output){
       ggtitle("Effects of temperature and wind on sleep quality") +
       theme_bw()
     
+    return(ggplotly(p))
+  })
+}
+
+sleepQualityTempPerDate <- function(input, output){
+  renderPlotly({
+    weather <- inputFileToWeatherData(input)
+    
+    p <-
+      ggplot(data = weather, aes(x = Date, y = quality, fill = temp)) + 
+      geom_bar(stat = "identity") +
+      coord_flip() +
+      xlab("Sleep quality") +
+      ylab("Date") +
+      ggtitle("Sleep quality per date") +
+      theme_bw()  
     return(ggplotly(p))
   })
 }

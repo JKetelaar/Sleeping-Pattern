@@ -20,6 +20,8 @@ shinyServer(function(input, output) {
                      avgTempPerWeek(input, output)
                    output$tempWindSleepQuality <-
                      tempWindSleepQuality(input, output)
+                   output$sleepQualityTempPerDate <-
+                     sleepQualityTempPerDate(input, output)
                  })
                  
                  # Sleep Aggregate
