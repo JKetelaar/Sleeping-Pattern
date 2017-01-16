@@ -208,7 +208,7 @@ outbedSleepCycle <- function(input, output) {
       data.frame(Count = bedtimeFreq, Time = timeLabels)
     
     p <-
-      ggplot(data = wakeup_time, aes(x = wakeup_time$Time, y = wakeup_time$Count.Freq)) +
+      ggplot(data = wakeup_time, aes(x = Time, y = Count.Freq)) +
       geom_bar(stat = "identity",
                color = "black",
                fill = "lightblue") +
@@ -217,7 +217,9 @@ outbedSleepCycle <- function(input, output) {
       ggtitle("Got out of bed") +
       theme_bw()
     
-    return(ggplotly(p))
+    p <- ggplotly(p)
+    
+    return(p)
   })
 }
 
