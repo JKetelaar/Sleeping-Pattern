@@ -183,7 +183,7 @@ generalTimeInBed <- function(input, output) {
     p <- ggplot(getAllData(), aes(in_bed, quality)) + theme_bw()
     p <-
       p + geom_point() + ggtitle("Sleep Quality vs. Time in Bed") + xlab("Time in Bed in Minutes") + ylab("Sleep Quality in %")
-    p <- p + geom_smooth(method = lm)
+    p <- p + geom_smooth()
     
     return(ggplotly(p))
   })
