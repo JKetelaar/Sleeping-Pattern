@@ -1,8 +1,51 @@
 library(shiny)
+library(e1071)
 
 stringToMinutes <- function(x) {
   x <- as.numeric(x)
   x[1] * 60 + x[2]
+}
+
+sleepCalculation <- function(x){
+  sleep_bayes <- x[,c("quality", "in_bed", "temp", "wind")]
+  
+  sleep_bayes$Sleep.quality[sleep_bayes$quality > 85] <- "Good"
+  sleep_bayes$Sleep.quality[sleep_bayes$quality <= 85] <- "Bad"
+  
+  sleep_bayes$Time.in.bed[sleep_bayes$in_bed > 520] <- "Long"
+  sleep_bayes$Time.in.bed[sleep_bayes$in_bed <= 550] <- "Short"
+  
+  sleep_bayes$temp[sleep_bayes$temp > 5] <- "Warm"
+  sleep_bayes$temp[sleep_bayes$temp <= 5] <- "Cold"
+  
+  sleep_bayes$wind[sleep_bayes$wind > 2] <- "Heavy"
+  sleep_bayes$wind[sleep_bayes$wind <= 2] <- "Light"
+  
+  model <- naiveBayes(Sleep.quality ~ ., data = sleep_bayes)
+  
+  x <- subset(sleep_bayes, sleep_bayes$Sleep.quality == "Good") 
+  y <- subset(sleep_bayes, sleep_bayes$Sleep.quality == "Bad")
+  
+  Long_Cold_Heavy <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,1] * model$tables$temp[1,2] * model$tables$wind[1,2]
+  
+  Long_Cold_Light <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,1] * model$tables$temp[1,2] * model$tables$wind[2,2]
+  
+  Long_Warm_Heavy <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,1] * model$tables$temp[2,2] * model$tables$wind[1,2]
+  
+  Long_Warm_Light <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,1] * model$tables$temp[2,2] * model$tables$wind[2,2]
+  
+  Short_Cold_Heavy <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,2] * model$tables$temp[1,2] * model$tables$wind[1,2]
+  
+  Short_Cold_Light <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,2] * model$tables$temp[1,2] * model$tables$wind[2,2]
+  
+  Short_Warm_Light <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,2] * model$tables$temp[2,2] * model$tables$wind[2,2]
+  
+  Short_Warm_Heavy <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,2] * model$tables$temp[2,2] * model$tables$wind[1,2]
+  
+  sleep_well <- data.frame(Long_Cold_Heavy, Long_Cold_Light, Long_Warm_Heavy, Long_Warm_Light, Short_Cold_Heavy, Short_Cold_Light, Short_Warm_Light, Short_Warm_Heavy)
+  
+  best_option <- names(sleep_well)[which(sleep_well==max(sleep_well))]
+  return(best_option)
 }
 
 toDataFrame <- function(data, username) {
@@ -319,6 +362,7 @@ generalTempWindSleepQuality <- function(input, output) {
 
 sleepQualityTempPerDate <- function(input, output) {
   renderPlotly({
+    
     weather <- inputFileToWeatherData(input)
     
     p <-
@@ -329,7 +373,16 @@ sleepQualityTempPerDate <- function(input, output) {
       ylab("Date") +
       ggtitle("Sleep quality per date") +
       theme_bw()
+    
     return(ggplotly(p))
+  })
+}
+
+sleepAnalytics <- function(input, output){
+  renderText({
+    weather <- inputFileToWeatherData(input)
+    
+    return(sleepCalculation(weather))
   })
 }
 

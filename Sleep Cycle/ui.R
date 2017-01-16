@@ -9,7 +9,8 @@ loadPackages(
     "shinydashboard",
     "plotly",
     "dplyr",
-    "lubridate"
+    "lubridate",
+    "e1071"
   )
 )
 
@@ -68,6 +69,10 @@ uiMySleepCycle <- function() {
         actionButton("do", "Submit")
       )),
       mainPanel(
+        uiOutput(outputId = "progressIndicator"),
+        
+        textOutput('analytics'),
+        
         h2('Out of bed frequency'),
         plotlyOutput('outbed'),
         

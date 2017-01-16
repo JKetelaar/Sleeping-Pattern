@@ -22,6 +22,8 @@ shinyServer(function(input, output) {
                      tempWindSleepQuality(input, output)
                    output$sleepQualityTempPerDate <-
                      sleepQualityTempPerDate(input, output)
+                   
+                   output$analytics = sleepAnalytics(input, output)
                  })
                  
                  # Sleep Aggregate
