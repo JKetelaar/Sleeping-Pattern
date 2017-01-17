@@ -109,7 +109,7 @@ getAllData <- function() {
 
 getWeatherData <- function(sleep, summarise) {
   conn <- getDatabaseConnection()
-  data <- dbGetQuery(conn,'SELECT * FROM knmi WHERE `temperature` > -90 AND `temperature` < 60')
+  data <- dbGetQuery(conn,'SELECT * FROM knmi WHERE `temperature` > -90 AND `temperature` < 60 AND `wind` < 0')
   dbDisconnect(conn)
   
   sleep$End <- as.character(sleep$end)
