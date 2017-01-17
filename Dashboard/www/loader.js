@@ -29,7 +29,7 @@ var spinner = [];
   $('#do').on('click', function(){
     submitted = true;
     
-    var target = document.getElementById('loader')
+    var target = document.getElementById('loader');
     spinner['outbed'] = new Spinner(opts).spin(target);
     
     checkLoaded('outbed');
@@ -38,14 +38,34 @@ var spinner = [];
   var target = document.getElementById('gloader')
   spinner['gTimeInBed'] = new Spinner(opts).spin(target);
   checkLoaded('gTimeInBed');
+  hideH2($('#outbed').parent(), true);
+
   
   function checkLoaded(elementId){
     if ( $('#' + elementId).children().length > 0) {
       if (spinner !== null){
+        if (elementId == 'outbed'){
+          hideH2($('#' + elementId).parent(), false);
+        }
+        
         spinner[elementId].stop();
       }
     }else{
+      if (elementId == 'outbed'){
+          hideH2($('#' + elementId).parent(), true);
+        }
       setTimeout( checkLoaded, 300, elementId );
     }
   }
+  
+  function hideH2(element, hide){
+    element.children('h2').each(function () {
+      if (hide === true){
+        $(this).css('display', 'none');
+      }else{
+        $(this).css('display', 'initial');
+      }
+    });
+  }
+  
 });
