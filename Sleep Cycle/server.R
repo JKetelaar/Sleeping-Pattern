@@ -384,7 +384,11 @@ sleepAnalytics <- function(input, output){
   renderText({
     weather <- inputFileToWeatherData(input)
     
-    return(sleepCalculation(weather))
+    result <- sleepCalculation(weather)
+    split <- strsplit(result, "_")
+    split <- split[[1]]
+    
+    return(sprintf("The best way to sleep for you is to sleep at %s nights, with a %s temperature and a %s wind.", tolower(split[1]), tolower(split[2]), tolower(split[3])))
   })
 }
 

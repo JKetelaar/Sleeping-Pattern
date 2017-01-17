@@ -74,6 +74,7 @@ uiMySleepCycle <- function() {
       mainPanel(
         uiOutput(outputId = "progressIndicator"),
         
+        h2('Our advice'),
         textOutput('analytics'),
         
         h2('Out of bed frequency'),
