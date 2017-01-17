@@ -57,7 +57,7 @@ shinyServer(function(input, output) {
                  output$gTempWindSleepQuality <-
                    generalTempWindSleepQuality(input, output)
                  
-                 incProgress(0.9, detail = "Plotting avarage temperature")
+                 incProgress(0.9, detail = "Plotting average temperature")
                  output$gAvgTempPerWeek <-
                    generalAvgTempPerWeek(input, output)
                })

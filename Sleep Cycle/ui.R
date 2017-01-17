@@ -26,8 +26,7 @@ uiSleepCycle <- function() {
       )
     )),
     hr(),
-    sidebarLayout(
-      sidebarPanel(wellPanel(h5('Soon to come'))),
+    sidebarLayout(      
       mainPanel(
         pdf(NULL),
         h2('Sleep Quality per minute'),
@@ -39,7 +38,7 @@ uiSleepCycle <- function() {
         h2('Sleep Duration'),
         plotlyOutput('gSleepDuration'),
         
-        h2('Avarage temperature per week'),
+        h2('Average temperature per week'),
         plotlyOutput('gAvgTempPerWeek'),
         
         h2('Effects of temperature and wind on sleep quality'),
@@ -77,7 +76,7 @@ uiMySleepCycle <- function() {
         h2('Out of bed frequency'),
         plotlyOutput('outbed'),
         
-        h2('Avarage temperature per week'),
+        h2('Average temperature per week'),
         plotlyOutput('avgTempPerWeek'),
         
         h2('Effects of temperature and wind on sleep quality'),
