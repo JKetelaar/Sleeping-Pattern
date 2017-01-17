@@ -121,7 +121,7 @@ getWeatherData <- function(sleep, summarise) {
   weather$Time <-
     format(as.POSIXct(weather$date), format = "%H:%M:%S")
   
-  # Take the avarage weather, from Utrecht
+  # Take the average weather, from Utrecht
   weather <- subset(weather, source = "INOORDBR196")
   
   meanTempDay <-
