@@ -1,7 +1,11 @@
 library(shiny)
 
+tData <- TWITTER$analyzeData(KNMI$readTwitterData())
+tData$day <- as.Date(tData$day, '%Y-%m-%d')
+gData <- GTRENDS$applyWeights(KNMI$readGtrendsData())
+gData$day <- as.Date(gData$day, '%Y-%m-%d')
+tData$one <- 1
 weatherByDay <- KNMI$readData()
-
 weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
 
 x <- list(title = 'Day')
@@ -28,6 +32,20 @@ weatherWithAnalyticsData <- function(input, output)  {
     if (index > 0 && index <= length(country$regions)) {
       region <- country$regions[[index]]
     }
+    twitterDataW <- tData[tData$country == country$name, ]
+    gtrendsDataW <- gData[gData$location == country$geoCountryCode, ]
+    if(!is.null(region)) {
+      twitterDataW <- twitterDataW[twitterDataW$region == region$name, ]
+    }
+    twitterDataW <- aggregate(twitterDataW$weight, list(day = twitterDataW$day), mean)
+    gtrendsDataW <- aggregate(gtrendsDataW$weight, list(day = gtrendsDataW$day), mean)
+    gtrendsDataW$x <- norm(gtrendsDataW$x) * 2 - 1
+    aggData <- merge(gtrendsDataW, twitterDataW, by = 'day', all = T)
+    aggData[is.na(aggData)] <- 0
+    aggData$a <- aggData$x.x * 0.5 + aggData$x.y * 0.5
+    aggData$x.x <- NULL
+    aggData$x.y <- NULL
+
     day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
     night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     plot_ly(
@@ -42,21 +60,21 @@ weatherWithAnalyticsData <- function(input, output)  {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = KNMI$aggData$day,
-        y = KNMI$aggData$a,
+        x = aggData$day,
+        y = aggData$a,
         name = 'Aggregated',
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = KNMI$twitterData$day,
-        y = KNMI$twitterData$x,
+        x = twitterDataW$day,
+        y = twitterDataW$x,
         name = 'Twitter',
         yaxis = "y2",
         visible = 'legendonly'
       ) %>%
       add_trace(
-        x = KNMI$gtrendsData$day,
-        y = KNMI$gtrendsData$x,
+        x = gtrendsDataW$day,
+        y = gtrendsDataW$x,
         name = 'Gtrends',
         yaxis = "y2",
         visible = 'legendonly'
@@ -87,6 +105,15 @@ weatherWithFrequency <- function(input, output) {
     if (index > 0 && index <= length(country$regions)) {
       region <- country$regions[[index]]
     }
+    gFreq <- gData[gData$location == country$geoCountryCode, ]
+    tFreq <- tData[tData$country == country$name, ]
+    if(!is.null(region)) {
+      tFreq <- tFreq[tFreq$region == region$name, ]
+    }
+    gFreq <- aggregate(gFreq$percentage, list(day = gFreq$day), sum)
+    tFreq <- aggregate(tFreq$one, list(day = tFreq$day), sum)
+    gFreq$x <- norm(gFreq$x)
+    tFreq$x <- norm(tFreq$x)
     day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
     night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     
@@ -102,14 +129,14 @@ weatherWithFrequency <- function(input, output) {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = KNMI$tFreq$day,
-        y = KNMI$tFreq$x,
+        x = tFreq$day,
+        y = tFreq$x,
         name = 'Tweet Frequency',
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = KNMI$gFreq$day,
-        y = KNMI$gFreq$x,
+        x = gFreq$day,
+        y = gFreq$x,
         name = 'Search Frequency',
         yaxis = "y2"
       ) %>%
@@ -124,7 +151,5 @@ weatherWithFrequency <- function(input, output) {
           overlaying = 'y'
         )
       )
-    
-    
   })
 }
