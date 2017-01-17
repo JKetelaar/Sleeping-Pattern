@@ -66,7 +66,8 @@ uiMySleepCycle <- function() {
           width = "800px"
         ),
         textInput('username', 'Your name'),
-        actionButton("do", "Submit")
+        actionButton("do", "Submit"),
+        div(id = 'loader', class = 'spinner')
       )),
       mainPanel(
         uiOutput(outputId = "progressIndicator"),

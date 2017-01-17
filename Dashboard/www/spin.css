@@ -1,0 +1,8 @@
+#loader {
+  left: 50%;
+  top: 40px;
+  margin-left: -32px;
+  margin-top: -32px;
+  z-index: 99999999;
+  height: 28px;
+}

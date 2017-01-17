@@ -1,13 +1,15 @@
 source("../common/common.R")
-loadPackages(c(
-  "shiny",
-  "ggplot2",
-  "lubridate",
-  "plyr",
-  "shinythemes",
-  "shinydashboard",
-  "plotly"
-))
+loadPackages(
+  c(
+    "shiny",
+    "ggplot2",
+    "lubridate",
+    "plyr",
+    "shinythemes",
+    "shinydashboard",
+    "plotly"
+  )
+)
 
 source("../Sleep Aggregate/ui.R")
 source("../Sleep Cycle/ui.R")
@@ -29,9 +31,14 @@ shinyUI(dashboardPage(
              tabName = "twitter",
              icon = icon("twitter"))
   )),
-  dashboardBody(tabItems(
-    uiAggregate(),
-    uiMySleepCycle(),
-    uiSleepCycle()
-  ))
+  dashboardBody(
+    tags$head(
+      tags$script(src = "spin.js"),
+      tags$link(href = "spin.css"),
+      tags$script(src = "loader.js")
+    ),
+    tabItems(uiAggregate(),
+             uiMySleepCycle(),
+             uiSleepCycle())
+  )
 ))
