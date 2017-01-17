@@ -388,7 +388,7 @@ sleepAnalytics <- function(input, output){
     split <- strsplit(result, "_")
     split <- split[[1]]
     
-    return(sprintf("The best way to sleep for you is to sleep at %s nights, with a %s temperature and a %s wind.", tolower(split[1]), tolower(split[2]), tolower(split[3])))
+    return(sprintf("The best way for you to sleep is to make %s nights, with a %s temperature and a %s wind.", tolower(split[1]), tolower(split[2]), tolower(split[3])))
   })
 }
 
