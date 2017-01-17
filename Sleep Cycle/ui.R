@@ -26,8 +26,7 @@ uiSleepCycle <- function() {
       )
     )),
     hr(),
-    sidebarLayout(
-      sidebarPanel(wellPanel(h5('Soon to come'))),
+    sidebarLayout(      
       mainPanel(
         pdf(NULL),
         h2('Sleep Quality per minute'),
