@@ -9,11 +9,11 @@ stringToMinutes <- function(x) {
 sleepCalculation <- function(x){
   sleep_bayes <- x[,c("quality", "in_bed", "temp", "wind")]
   
-  sleep_bayes$Sleep.quality[sleep_bayes$quality > 85] <- "Good"
-  sleep_bayes$Sleep.quality[sleep_bayes$quality <= 85] <- "Bad"
+  sleep_bayes$quality[sleep_bayes$quality > 85] <- "Good"
+  sleep_bayes$quality[sleep_bayes$quality <= 85] <- "Bad"
   
-  sleep_bayes$Time.in.bed[sleep_bayes$in_bed > 520] <- "Long"
-  sleep_bayes$Time.in.bed[sleep_bayes$in_bed <= 550] <- "Short"
+  sleep_bayes$in_bed[sleep_bayes$in_bed > 520] <- "Long"
+  sleep_bayes$in_bed[sleep_bayes$in_bed <= 550] <- "Short"
   
   sleep_bayes$temp[sleep_bayes$temp > 5] <- "Warm"
   sleep_bayes$temp[sleep_bayes$temp <= 5] <- "Cold"
@@ -21,10 +21,10 @@ sleepCalculation <- function(x){
   sleep_bayes$wind[sleep_bayes$wind > 2] <- "Heavy"
   sleep_bayes$wind[sleep_bayes$wind <= 2] <- "Light"
   
-  model <- naiveBayes(Sleep.quality ~ ., data = sleep_bayes)
+  model <- naiveBayes(quality ~ ., data = sleep_bayes)
   
-  x <- subset(sleep_bayes, sleep_bayes$Sleep.quality == "Good") 
-  y <- subset(sleep_bayes, sleep_bayes$Sleep.quality == "Bad")
+  x <- subset(sleep_bayes, sleep_bayes$quality == "Good") 
+  y <- subset(sleep_bayes, sleep_bayes$quality == "Bad")
   
   Long_Cold_Heavy <- (nrow(x) / (nrow(x)+ nrow(y))) * model$tables$in_bed[2,1] * model$tables$temp[1,2] * model$tables$wind[1,2]
   
@@ -109,7 +109,7 @@ getAllData <- function() {
 
 getWeatherData <- function(sleep, summarise) {
   conn <- getDatabaseConnection()
-  data <- dbGetQuery(conn,'SELECT * FROM knmi WHERE `temperature` > -90 AND `temperature` < 60 AND `wind` > 0')
+  data <- dbGetQuery(conn,'SELECT * FROM knmi WHERE `temperature` > -90 AND `temperature` < 60 AND `wind` >= 0')
   dbDisconnect(conn)
   
   sleep$End <- as.character(sleep$end)
