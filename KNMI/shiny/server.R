@@ -1,29 +1,11 @@
 library(shiny)
 
-
 tData <- TWITTER$analyzeData(KNMI$readTwitterData())
 tData$day <- as.Date(tData$day, '%Y-%m-%d')
-twitterDataW <- aggregate(tData$weight, list(day = tData$day), mean)
-
 gData <- GTRENDS$applyWeights(KNMI$readGtrendsData())
 gData$day <- as.Date(gData$day, '%Y-%m-%d')
-gtrendsDataW <- aggregate(gData$weight, list(day = gData$day), mean)
-gtrendsDataW$x <- norm(gtrendsDataW$x) * 2 - 1
-
-aggData <- merge(gtrendsDataW, twitterDataW, by = 'day', all = T)
-aggData[is.na(aggData)] <- 0
-aggData$a <- aggData$x.x * 0.5 + aggData$x.y * 0.5
-aggData$x.x <- NULL
-aggData$x.y <- NULL
-
 tData$one <- 1
-gFreq <- aggregate(gData$percentage, list(day = gData$day), sum)
-tFreq <- aggregate(tData$one, list(day = tData$day), sum)
-gFreq$x <- norm(gFreq$x)
-tFreq$x <- norm(tFreq$x)
-
 weatherByDay <- KNMI$readData()
-
 weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
 
 x <- list(title = 'Day')
@@ -50,6 +32,20 @@ weatherWithAnalyticsData <- function(input, output)  {
     if (index > 0 && index <= length(country$regions)) {
       region <- country$regions[[index]]
     }
+    twitterDataW <- tData[tData$country == country$name, ]
+    gtrendsDataW <- gData[gData$location == country$geoCountryCode, ]
+    if(!is.null(region)) {
+      twitterDataW <- twitterDataW[twitterDataW$region == region$name, ]
+    }
+    twitterDataW <- aggregate(twitterDataW$weight, list(day = twitterDataW$day), mean)
+    gtrendsDataW <- aggregate(gtrendsDataW$weight, list(day = gtrendsDataW$day), mean)
+    gtrendsDataW$x <- norm(gtrendsDataW$x) * 2 - 1
+    aggData <- merge(gtrendsDataW, twitterDataW, by = 'day', all = T)
+    aggData[is.na(aggData)] <- 0
+    aggData$a <- aggData$x.x * 0.5 + aggData$x.y * 0.5
+    aggData$x.x <- NULL
+    aggData$x.y <- NULL
+
     day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
     night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     plot_ly(
@@ -109,6 +105,15 @@ weatherWithFrequency <- function(input, output) {
     if (index > 0 && index <= length(country$regions)) {
       region <- country$regions[[index]]
     }
+    gFreq <- gData[gData$location == country$geoCountryCode, ]
+    tFreq <- tData[tData$country == country$name, ]
+    if(!is.null(region)) {
+      tFreq <- tFreq[tFreq$region == region$name, ]
+    }
+    gFreq <- aggregate(gFreq$percentage, list(day = gFreq$day), sum)
+    tFreq <- aggregate(tFreq$one, list(day = tFreq$day), sum)
+    gFreq$x <- norm(gFreq$x)
+    tFreq$x <- norm(tFreq$x)
     day <- modifyTemp(region, weatherByDay[weatherByDay$night == 0,])
     night <- modifyTemp(region, weatherByDay[weatherByDay$night == 1,])
     
