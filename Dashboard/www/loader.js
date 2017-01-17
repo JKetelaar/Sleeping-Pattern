@@ -24,26 +24,28 @@ $(document).ready(function(){
 , position: 'absolute' // Element positioning
 }
 
-var spinner = null;
+var spinner = [];
   
   $('#do').on('click', function(){
-    console.log('HI!');
-    
     submitted = true;
     
     var target = document.getElementById('loader')
-    spinner = new Spinner(opts).spin(target);
+    spinner['outbed'] = new Spinner(opts).spin(target);
     
-    checkLoaded();
+    checkLoaded('outbed');
   });
   
-  function checkLoaded(){
-    if ( $('#outbed').children().length > 0) {
+  var target = document.getElementById('gloader')
+  spinner['gTimeInBed'] = new Spinner(opts).spin(target);
+  checkLoaded('gTimeInBed');
+  
+  function checkLoaded(elementId){
+    if ( $('#' + elementId).children().length > 0) {
       if (spinner !== null){
-        spinner.stop();
+        spinner[elementId].stop();
       }
     }else{
-      setTimeout( checkLoaded, 300 );
+      setTimeout( checkLoaded, 300, elementId );
     }
   }
 });

@@ -29,6 +29,8 @@ uiSleepCycle <- function() {
     fluidPage(fluidRow(
       column(
         12,
+        div(id = 'gloader', class = 'spinner'),
+        
         pdf(NULL),
         h2('Sleep Quality per minute'),
         plotlyOutput('gTimeInBed'),
