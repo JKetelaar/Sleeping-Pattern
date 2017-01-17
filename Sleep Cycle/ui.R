@@ -26,8 +26,9 @@ uiSleepCycle <- function() {
       )
     )),
     hr(),
-    sidebarLayout(      
-      mainPanel(
+    fluidPage(fluidRow(
+      column(
+        12,
         pdf(NULL),
         h2('Sleep Quality per minute'),
         plotlyOutput('gTimeInBed'),
@@ -44,7 +45,7 @@ uiSleepCycle <- function() {
         h2('Effects of temperature and wind on sleep quality'),
         plotlyOutput('gTempWindSleepQuality')
       )
-    )
+    ))
   )
 }
 
