@@ -1,10 +1,6 @@
 source('../../common/common.R')
 loadPackages(c('rjson', 'RMySQL', 'plotly'))
 
-
-#config <- fromJSON(file = '../../config.json')
-#settings <- fromJSON(file = '../../settings.json')
-
 readData <- function() {
   conn <- dbConnect(RMySQL::MySQL(),
                     host = config$mysql$host,
@@ -37,24 +33,3 @@ readGtrendsData <- function() {
   dbDisconnect(conn)
   data
 }
-
-tData <- TWITTER$analyzeData(readTwitterData())
-tData$day <- as.Date(tData$day, '%Y-%m-%d')
-twitterData <- aggregate(tData$weight, list(day = tData$day), mean)
-
-gData <- GTRENDS$applyWeights(readGtrendsData())
-gData$day <- as.Date(gData$day, '%Y-%m-%d')
-gtrendsData <- aggregate(gData$weight, list(day = gData$day), mean)
-gtrendsData$x <- norm(gtrendsData$x) * 2 - 1
-
-aggData <- merge(gtrendsData, twitterData, by = 'day', all = T)
-aggData[is.na(aggData)] <- 0
-aggData$a <- aggData$x.x * 0.5 + aggData$x.y * 0.5
-aggData$x.x <- NULL
-aggData$x.y <- NULL
-
-tData$one <- 1
-gFreq <- aggregate(gData$percentage, list(day = gData$day), sum)
-tFreq <- aggregate(tData$one, list(day = tData$day), sum)
-gFreq$x <- norm(gFreq$x)
-tFreq$x <- norm(tFreq$x)

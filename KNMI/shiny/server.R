@@ -1,5 +1,27 @@
 library(shiny)
 
+
+tData <- TWITTER$analyzeData(KNMI$readTwitterData())
+tData$day <- as.Date(tData$day, '%Y-%m-%d')
+twitterDataW <- aggregate(tData$weight, list(day = tData$day), mean)
+
+gData <- GTRENDS$applyWeights(KNMI$readGtrendsData())
+gData$day <- as.Date(gData$day, '%Y-%m-%d')
+gtrendsDataW <- aggregate(gData$weight, list(day = gData$day), mean)
+gtrendsDataW$x <- norm(gtrendsDataW$x) * 2 - 1
+
+aggData <- merge(gtrendsDataW, twitterDataW, by = 'day', all = T)
+aggData[is.na(aggData)] <- 0
+aggData$a <- aggData$x.x * 0.5 + aggData$x.y * 0.5
+aggData$x.x <- NULL
+aggData$x.y <- NULL
+
+tData$one <- 1
+gFreq <- aggregate(gData$percentage, list(day = gData$day), sum)
+tFreq <- aggregate(tData$one, list(day = tData$day), sum)
+gFreq$x <- norm(gFreq$x)
+tFreq$x <- norm(tFreq$x)
+
 weatherByDay <- KNMI$readData()
 
 weatherByDay$day <- as.Date(weatherByDay$day, '%Y-%m-%d')
@@ -42,21 +64,21 @@ weatherWithAnalyticsData <- function(input, output)  {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = KNMI$aggData$day,
-        y = KNMI$aggData$a,
+        x = aggData$day,
+        y = aggData$a,
         name = 'Aggregated',
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = KNMI$twitterData$day,
-        y = KNMI$twitterData$x,
+        x = twitterDataW$day,
+        y = twitterDataW$x,
         name = 'Twitter',
         yaxis = "y2",
         visible = 'legendonly'
       ) %>%
       add_trace(
-        x = KNMI$gtrendsData$day,
-        y = KNMI$gtrendsData$x,
+        x = gtrendsDataW$day,
+        y = gtrendsDataW$x,
         name = 'Gtrends',
         yaxis = "y2",
         visible = 'legendonly'
@@ -102,14 +124,14 @@ weatherWithFrequency <- function(input, output) {
                 y = day$temperature,
                 name = 'Day Temp') %>%
       add_trace(
-        x = KNMI$tFreq$day,
-        y = KNMI$tFreq$x,
+        x = tFreq$day,
+        y = tFreq$x,
         name = 'Tweet Frequency',
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = KNMI$gFreq$day,
-        y = KNMI$gFreq$x,
+        x = gFreq$day,
+        y = gFreq$x,
         name = 'Search Frequency',
         yaxis = "y2"
       ) %>%
@@ -124,7 +146,5 @@ weatherWithFrequency <- function(input, output) {
           overlaying = 'y'
         )
       )
-    
-    
   })
 }
