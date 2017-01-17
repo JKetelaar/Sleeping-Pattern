@@ -48,15 +48,15 @@ weatherWithAnalyticsData <- function(input, output)  {
         yaxis = "y2"
       ) %>%
       add_trace(
-        x = twitterData$day,
-        y = twitterData$x,
+        x = KNMI$twitterData$day,
+        y = KNMI$twitterData$x,
         name = 'Twitter',
         yaxis = "y2",
         visible = 'legendonly'
       ) %>%
       add_trace(
-        x = gtrendsData$day,
-        y = gtrendsData$x,
+        x = KNMI$gtrendsData$day,
+        y = KNMI$gtrendsData$x,
         name = 'Gtrends',
         yaxis = "y2",
         visible = 'legendonly'
